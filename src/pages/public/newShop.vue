@@ -6,19 +6,6 @@
       <el-col :span="24">
 
         <el-form :inline="true" class="demo-form-inline">
-          <el-form-item label="时间">
-            <div class="block">
-              <el-date-picker
-                v-model="date"
-                type="daterange"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="yyyyMMdd"
-                default-value="2010-10-01">
-              </el-date-picker>
-            </div>
-          </el-form-item>
-
           <el-form-item label="店铺">
             <el-select v-model="shopId" filterable placeholder="请选择店铺">
 
@@ -50,12 +37,6 @@
       <el-col :span="24">
         <div id="gotobedbar2"></div>
       </el-col>
-      <el-col :span="24">
-        <div id="gotobedbar3"></div>
-      </el-col>
-      <el-col :span="24">
-        <div id="gotobedbar4"></div>
-      </el-col>
     </el-row>
 
 
@@ -83,29 +64,29 @@ const getBeforeDate = (n) => {
   return list.reverse();
 }
 
-var titles = ['营业额','收入','订单','活动补贴'];
+var titles = ['评论','订单','评分','推广消费','营业额','客单价','曝光','进店率','下单率'];
 const option = {
   title:[
     {
-      text:titles[0],
+      text:'评论',
       left:'25%',
       top:'1%',
       textAlign:'center'
     },
     {
-      text:titles[1],
+      text:'订单',
       left:'73%',
       top:'1%',
       textAlign:'center'
     },
     {
-      text:titles[2],
+      text:'评分',
       left:'25%',
       top:'50%',
       textAlign:'center'
     },
     {
-      text:titles[3],
+      text:'推广消费',
       left:'73%',
       top:'50%',
       textAlign:'center'
@@ -115,11 +96,10 @@ const option = {
 
 
   grid: [
-    {x: '7%', y: '7%', width: '38%', height: '38%'},
-    {x2: '7%', y: '7%', width: '38%', height: '38%'},
-    {x: '7%', y2: '7%', width: '38%', height: '38%'},
-    {x2: '7%', y2: '7%', width: '38%', height: '38%'}
-
+    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+    {x2: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+    {x: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
+    {x2: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
   ],
   tooltip: [
     {
@@ -138,10 +118,9 @@ const option = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
     feature: {
       mark: {show: true},
-      // dataView: {show: true, readOnly: false},
       magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
       restore: {show: true},
       saveAsImage: {show: true}
@@ -160,6 +139,130 @@ const option = {
   ],
   series: []
 }
+
+const option1 = {
+  title:[
+    {
+      text:'营业额',
+      left:'25%',
+      top:'1%',
+      textAlign:'center'
+    },
+    {
+      text:'客单价',
+      left:'73%',
+      top:'1%',
+      textAlign:'center'
+    },
+    {
+      text:'曝光',
+      left:'25%',
+      top:'50%',
+      textAlign:'center'
+    },
+    {
+      text:'进店率',
+      left:'73%',
+      top:'50%',
+      textAlign:'center'
+    }
+
+  ],
+
+
+  grid: [
+    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+    {x2: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+    {x: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
+    {x2: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
+  ],
+  tooltip: [
+    {
+      trigger: 'axis',
+      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      }
+    }
+  ],
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
+    feature: {
+      mark: {show: true},
+      magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  xAxis: [
+    {gridIndex: 0, min: 0, max: 20},
+    {gridIndex: 1, min: 0, max: 20},
+    {gridIndex: 2, min: 0, max: 20},
+    {gridIndex: 3, min: 0, max: 20}],
+  yAxis: [
+    {gridIndex: 0, type: 'value',},
+    {gridIndex: 1, type: 'value',},
+    {gridIndex: 2, type: 'value',},
+    {gridIndex: 3, type: 'value',}
+  ],
+  series: []
+}
+
+const option2 = {
+  title:[
+    {
+      text:'下单率',
+      left:'25%',
+      top:'1%',
+      textAlign:'center'
+    }
+  ],
+
+
+  grid: [
+    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+  ],
+  tooltip: [
+    {
+      trigger: 'axis',
+      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      }
+    }
+  ],
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
+    feature: {
+      mark: {show: true},
+      magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  xAxis: [
+    {gridIndex: 0, min: 0, max: 20},
+  ],
+  yAxis: [
+    {gridIndex: 0, type: 'value',},
+  ],
+  series: []
+}
+
 export default {
   name: "orderData",
   data() {
@@ -170,7 +273,7 @@ export default {
     }
   },
   methods: {
-    drawbar(id) {
+    drawbar(id,option) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
       height -= 120;
@@ -189,8 +292,8 @@ export default {
         });
         return
       }
-      let times = "startTime=" + this.date[0] + "&endTime=" + this.date[1] + "&shopId=" + this.shopId
-      this.$http.get(api.MT_BUS_DATE + "?" + times)
+      let parm = "shopId=" + this.shopId
+      this.$http.get(api.PB_NEW_SHOP + "?" + parm)
         .then(res => {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
@@ -212,16 +315,27 @@ export default {
     updateBase(dateSours) {
 
       let lista = [];
-      let turnovers = [];
-      let effectiveorders = [];
-      let settleacc = [];
-      let actsubs = [];
+      let evaluate = [];
+      let order = [];
+      let bizscore = [];
+      let moment = [];
+      let turnover = [];
+      let unitprice = [];
+      let overview = [];
+      let entryrate = [];
+      let orderrate = [];
       dateSours.forEach(function (value) {
         lista.push(value['date'])
-        turnovers.push(value['turnover'])
-        effectiveorders.push(value['effectiveorders'])
-        settleacc.push(value['settleacc'])
-        actsubs.push(value['actsub'])
+        evaluate.push(value['evaluate'])
+        order.push(value['order'])
+        bizscore.push(value['bizscore'])
+        moment.push(value['moment'])
+        turnover.push(value['turnover'])
+        unitprice.push(value['unitprice'])
+        overview.push(value['overview'])
+        entryrate.push(value['entryrate'])
+        orderrate.push(value['orderrate'])
+
       })
 
       option.xAxis = [
@@ -231,38 +345,91 @@ export default {
         {gridIndex: 3, data: lista}
       ]
 
+      option1.xAxis = [
+        {gridIndex: 0, data: lista},
+        {gridIndex: 1, data: lista},
+        {gridIndex: 2,data: lista},
+        {gridIndex: 3, data: lista}
+      ]
+      option2.xAxis = [
+        {gridIndex: 0, data: lista},
+      ]
+
       option.series = [
         {
-          name: '营业额',
+          name: '评论',
           type: 'line',
-          stack: '营业额',
+          stack: '评论',
           xAxisIndex: 0,
           yAxisIndex: 0,
-          data: turnovers,
-        }, {
-          name: '收入',
-          type: 'line',
-          stack: '收入',
-          xAxisIndex: 1,
-          yAxisIndex: 1,
-          data: settleacc,
+          data: evaluate,
         }, {
           name: '订单',
           type: 'line',
           stack: '订单',
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+          data: order,
+        }, {
+          name: '评分',
+          type: 'line',
+          stack: '评分',
           xAxisIndex: 2,
           yAxisIndex: 2,
-          data: effectiveorders,
+          data: bizscore,
         }, {
-          name: '活动补贴',
+          name: '推广消费',
           type: 'line',
-          stack: '活动补贴',
+          stack: '推广消费',
           xAxisIndex: 3,
           yAxisIndex: 3,
-          data: actsubs,
-        }]
-      debugger
-      this.drawbar('gotobedbar');
+          data: moment,
+        }, ]
+      option1.series =[
+        {
+          name: '营业额',
+          type: 'line',
+          stack: '营业额',
+          xAxisIndex: 4,
+          yAxisIndex: 4,
+          data: turnover,
+        }, {
+          name: '客单价',
+          type: 'line',
+          stack: '客单价',
+          xAxisIndex: 5,
+          yAxisIndex: 5,
+          data: unitprice,
+        }, {
+          name: '曝光',
+          type: 'line',
+          stack: '曝光',
+          xAxisIndex: 6,
+          yAxisIndex: 6,
+          data: overview,
+        }, {
+          name: '进店率',
+          type: 'line',
+          stack: '进店率',
+          xAxisIndex: 7,
+          yAxisIndex: 7,
+          data: entryrate,
+        }
+      ]
+      option2.series =[
+        {
+          name: '下单率',
+          type: 'line',
+          stack: '下单率',
+          xAxisIndex: 8,
+          yAxisIndex: 8,
+          data: orderrate,
+        }
+      ]
+
+      this.drawbar('gotobedbar',option1);
+      // this.drawbar('gotobedbar1',option1);
+      // this.drawbar('gotobedbar2',option2);
     },
 
     getAllShop() {
@@ -302,7 +469,6 @@ export default {
     this.date = [statrDate, endDate]
 
     this.$nextTick(function () {
-      // this.drawbar('gotobedbar');
       var that = this;
       var resizeTimer = null;
       window.onresize = function () {
@@ -320,7 +486,7 @@ export default {
 
 #gotobedbar {
   /*width: 100%;*/
-  min-height: 300px;
-  margin-right: 15px;
+  /*min-height: 300px;*/
+  /*margin-right: 15px;*/
 }
 </style>
