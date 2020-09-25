@@ -11,6 +11,7 @@ import resetPwd from "../pages/resetPwd.vue";
 import mtOrderData from "../pages/mt/orderData"
 import mtOrderData1 from "../pages/mt/orderData1"
 import scoreDate from "../pages/mt/scoreDate"
+import newShop from "../pages/public/newShop"
 
 // Routes
 const routes = [
@@ -31,7 +32,8 @@ const routes = [
       {path: '/sys/resource', component: resource},
       {path: '/mt/bizdata/orderData', component: mtOrderData},
       {path: '/mt/bizdata/orderData1', component: mtOrderData1},
-      {path: '/mt/bizdata/scoreDate', component: scoreDate}
+      {path: '/mt/bizdata/scoreDate', component: scoreDate},
+      {path: '/public/newShop', component: newShop}
 
     ]
   },

@@ -48,6 +48,11 @@ export const MT_SCORE_DATE = CONTEXT + '/app/mt/userComment/scoreDate';
 export const MT_ALL_SHOP = CONTEXT + '/app/mt/shopReptile/shopId';
 //美团营业数据
 export const MT_BUS_DATE = CONTEXT + '/app/mt/businstatistics/statistics';
+//店铺新店数据
+export const PB_NEW_SHOP = CONTEXT + '/app/mt/newShop/track'
+
+//新店店铺信息
+export const PB_NEW_SHOP_INFO = CONTEXT + '/app/mt/AllShop/Shop'
 
 
 
