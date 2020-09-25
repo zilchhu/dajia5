@@ -64,48 +64,47 @@ const getBeforeDate = (n) => {
   return list.reverse();
 }
 
-var titles = ['评论','订单','评分','推广消费','营业额','客单价','曝光','进店率','下单率'];
 const option = {
-  title:[
+  title: [
     {
-      text:'评论',
-      left:'25%',
-      top:'1%',
-      textAlign:'center'
+      text: '评论',
+      left: '25%',
+      top: '1%',
+      textAlign: 'center'
     },
     {
-      text:'订单',
-      left:'73%',
-      top:'1%',
-      textAlign:'center'
+      text: '订单',
+      left: '73%',
+      top: '1%',
+      textAlign: 'center'
     },
     {
-      text:'评分',
-      left:'25%',
-      top:'50%',
-      textAlign:'center'
+      text: '评分',
+      left: '25%',
+      top: '50%',
+      textAlign: 'center'
     },
     {
-      text:'推广消费',
-      left:'73%',
-      top:'50%',
-      textAlign:'center'
+      text: '推广消费',
+      left: '73%',
+      top: '50%',
+      textAlign: 'center'
     }
 
   ],
 
 
   grid: [
-    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
-    {x2: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
-    {x: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
-    {x2: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
+    {x: '7%', y: '7%', width: '38%', height: '38%', containLabel: true},
+    {x2: '7%', y: '7%', width: '38%', height: '38%', containLabel: true},
+    {x: '7%', y2: '7%', width: '38%', height: '38%', containLabel: true},
+    {x2: '7%', y2: '7%', width: '38%', height: '38%', containLabel: true},
   ],
   tooltip: [
     {
       trigger: 'axis',
-      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
     }
   ],
@@ -118,7 +117,7 @@ const option = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#d2691e'],
     feature: {
       mark: {show: true},
       magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
@@ -141,46 +140,46 @@ const option = {
 }
 
 const option1 = {
-  title:[
+  title: [
     {
-      text:'营业额',
-      left:'25%',
-      top:'1%',
-      textAlign:'center'
+      text: '营业额',
+      left: '25%',
+      top: '1%',
+      textAlign: 'center'
     },
     {
-      text:'客单价',
-      left:'73%',
-      top:'1%',
-      textAlign:'center'
+      text: '客单价',
+      left: '73%',
+      top: '1%',
+      textAlign: 'center'
     },
     {
-      text:'曝光',
-      left:'25%',
-      top:'50%',
-      textAlign:'center'
+      text: '曝光',
+      left: '25%',
+      top: '50%',
+      textAlign: 'center'
     },
     {
-      text:'进店率',
-      left:'73%',
-      top:'50%',
-      textAlign:'center'
+      text: '进店率',
+      left: '73%',
+      top: '50%',
+      textAlign: 'center'
     }
 
   ],
 
 
   grid: [
-    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
-    {x2: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
-    {x: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
-    {x2: '7%', y2: '7%', width: '38%', height: '38%',containLabel:true},
+    {x: '7%', y: '7%', width: '38%', height: '38%', containLabel: true},
+    {x2: '7%', y: '7%', width: '38%', height: '38%', containLabel: true},
+    {x: '7%', y2: '7%', width: '38%', height: '38%', containLabel: true},
+    {x2: '7%', y2: '7%', width: '38%', height: '38%', containLabel: true},
   ],
   tooltip: [
     {
       trigger: 'axis',
-      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
     }
   ],
@@ -193,7 +192,7 @@ const option1 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#d2691e'],
     feature: {
       mark: {show: true},
       magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
@@ -216,24 +215,24 @@ const option1 = {
 }
 
 const option2 = {
-  title:[
+  title: [
     {
-      text:'下单率',
-      left:'25%',
-      top:'1%',
-      textAlign:'center'
+      text: '下单率',
+      left: '25%',
+      top: '1%',
+      textAlign: 'center'
     }
   ],
 
 
   grid: [
-    {x: '7%', y: '7%', width: '38%', height: '38%',containLabel:true},
+    {x: '7%', y: '7%', width: '38%', height: '38%', containLabel: true},
   ],
   tooltip: [
     {
       trigger: 'axis',
-      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+      axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
     }
   ],
@@ -246,7 +245,7 @@ const option2 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e','#1e90ff', '#22bb22', '#4b0082', '#d2691e','#d2691e'],
+    color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#1e90ff', '#22bb22', '#4b0082', '#d2691e', '#d2691e'],
     feature: {
       mark: {show: true},
       magicType: {show: true, type: ['line', 'bar'/*, 'stack', 'tiled'*/]},
@@ -273,7 +272,15 @@ export default {
     }
   },
   methods: {
-    drawbar(id,option) {
+
+    sortByKey(array, key) {
+      return array.sort(function (a, b) {
+        var x = a[key];
+        var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      });
+    },
+    drawbar(id, option) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
       height -= 120;
@@ -324,6 +331,8 @@ export default {
       let overview = [];
       let entryrate = [];
       let orderrate = [];
+
+      dateSours = this.sortByKey(dateSours, 'date')
       dateSours.forEach(function (value) {
         lista.push(value['date'])
         evaluate.push(value['evaluate'])
@@ -341,14 +350,14 @@ export default {
       option.xAxis = [
         {gridIndex: 0, data: lista},
         {gridIndex: 1, data: lista},
-        {gridIndex: 2,data: lista},
+        {gridIndex: 2, data: lista},
         {gridIndex: 3, data: lista}
       ]
 
       option1.xAxis = [
         {gridIndex: 0, data: lista},
         {gridIndex: 1, data: lista},
-        {gridIndex: 2,data: lista},
+        {gridIndex: 2, data: lista},
         {gridIndex: 3, data: lista}
       ]
       option2.xAxis = [
@@ -384,56 +393,56 @@ export default {
           xAxisIndex: 3,
           yAxisIndex: 3,
           data: moment,
-        }, ]
-      option1.series =[
+        },]
+      option1.series = [
         {
           name: '营业额',
           type: 'line',
           stack: '营业额',
-          xAxisIndex: 4,
-          yAxisIndex: 4,
+          xAxisIndex: 0,
+          yAxisIndex: 0,
           data: turnover,
         }, {
           name: '客单价',
           type: 'line',
           stack: '客单价',
-          xAxisIndex: 5,
-          yAxisIndex: 5,
+          xAxisIndex: 1,
+          yAxisIndex: 1,
           data: unitprice,
         }, {
           name: '曝光',
           type: 'line',
           stack: '曝光',
-          xAxisIndex: 6,
-          yAxisIndex: 6,
+          xAxisIndex: 2,
+          yAxisIndex: 2,
           data: overview,
         }, {
           name: '进店率',
           type: 'line',
           stack: '进店率',
-          xAxisIndex: 7,
-          yAxisIndex: 7,
+          xAxisIndex: 3,
+          yAxisIndex: 3,
           data: entryrate,
         }
       ]
-      option2.series =[
+      option2.series = [
         {
           name: '下单率',
           type: 'line',
           stack: '下单率',
-          xAxisIndex: 8,
-          yAxisIndex: 8,
+          xAxisIndex: 0,
+          yAxisIndex: 0,
           data: orderrate,
         }
       ]
 
-      this.drawbar('gotobedbar',option1);
-      // this.drawbar('gotobedbar1',option1);
-      // this.drawbar('gotobedbar2',option2);
+      this.drawbar('gotobedbar', option);
+      this.drawbar('gotobedbar1', option1);
+      this.drawbar('gotobedbar2', option2);
     },
 
     getAllShop() {
-      this.$http.get(api.MT_ALL_SHOP)
+      this.$http.get(api.PB_NEW_SHOP_INFO)
         .then(res => {
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
@@ -445,7 +454,7 @@ export default {
                 label: '全部'
               }]
               resData.forEach(function (va) {
-                op.push({value: va.wmpoiid, label: va.reptileType})
+                op.push({value: va.shopId, label: va.shopName})
               });
               this.options = op
               console.log(op)
