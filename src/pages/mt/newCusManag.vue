@@ -78,10 +78,11 @@ const getBeforeDate = (n) => {
   return list.reverse();
 }
 
+var titles = ['下单总人数','新客人数','老客人数','新客占比','老客占比','商圈下单人数排名'];
 const option = {
-  color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺营业额',
+    text: '下单总人数',
     left: 'center',
   },
   tooltip: {
@@ -92,7 +93,7 @@ const option = {
   },
 
   legend: {
-    data: ['营业额'],
+    data: ['评论'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -147,9 +148,9 @@ const option = {
   series: []
 }
 const option1 = {
-  color: ['#22bb22', '#4b0082', '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺收入',
+    text: '老客占比',
     left: 'center',
   },
   tooltip: {
@@ -160,7 +161,7 @@ const option1 = {
   },
 
   legend: {
-    data: ['收入'],
+    data: ['订单'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -175,7 +176,7 @@ const option1 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1efff4'],
+    color: ['#70d1d5'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -215,9 +216,9 @@ const option1 = {
   series: []
 }
 const option2 = {
-  color: [ '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺订单',
+    text: '商圈下单人数排名',
     left: 'center',
   },
   tooltip: {
@@ -228,7 +229,7 @@ const option2 = {
   },
 
   legend: {
-    data: ['订单'],
+    data: ['评分'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -243,7 +244,7 @@ const option2 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1eff8f'],
+    color: ['#70d1d5'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -282,10 +283,8 @@ const option2 = {
   ],
   series: []
 }
-
-
 export default {
-  name: "orderData",
+  name: "newCusManag",
   data() {
     return {
       date: '',
@@ -294,7 +293,7 @@ export default {
     }
   },
   methods: {
-    drawbar(option, id) {
+    drawbar(id,option) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
       height -= 120;
@@ -315,7 +314,7 @@ export default {
         return
       }
       let times = "startTime=" + this.date[0] + "&endTime=" + this.date[1] + "&shopId=" + this.shopId
-      this.$http.get(api.MT_BUS_DATE + "?" + times)
+      this.$http.get(api.MT_CUSMANAG + "?" + times)
         .then(res => {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
@@ -337,20 +336,24 @@ export default {
     updateBase(dateSours) {
 
       let lista = [];
-      let turnovers = [];
-      let effectiveorders = [];
-      let settleacc = [];
+      let allsingle = [];
+      let newsingle = [];
+      let oldsingle = [];
+      let newpercent = [];
+      let oldpercent = [];
+      let allavg = [];
       dateSours.forEach(function (value) {
         lista.push(value['date'])
-        turnovers.push(value['turnover'])
-        effectiveorders.push(value['effectiveorders'])
-        settleacc.push(value['settleacc'])
+        allsingle.push(value['allsingle'])
+        newsingle.push(value['newsingle'])
+        oldsingle.push(value['oldsingle'])
+        newpercent.push(value['newpercent'])
+        oldpercent.push(value['oldpercent'])
+        allavg.push(value['allavg'])
       })
-      console.log(turnovers)
-      console.log(effectiveorders)
-      console.log(settleacc)
 
-      option.xAxis = [
+
+      option1.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
@@ -360,11 +363,11 @@ export default {
 
       option.series = [
         {
-          name: '营业额',
+          name: '下单总人数',
           type: 'bar',
           tiled: '总量',
           areaStyle: {normal: {}},
-          data: turnovers
+          data: allsingle
         },]
 
       option1.xAxis = [
@@ -377,11 +380,11 @@ export default {
 
       option1.series = [
         {
-          name: '收入',
+          name: '老客占比',
           type: 'bar',
-          tiled: '收入',
+          tiled: '总量',
           areaStyle: {normal: {}},
-          data: settleacc
+          data: oldpercent
         },]
 
       option2.xAxis = [
@@ -394,18 +397,18 @@ export default {
 
       option2.series = [
         {
-          name: '订单',
+          name: '商圈下单人数排名',
           type: 'bar',
-          tiled: '订单',
+          tiled: '总量',
           areaStyle: {normal: {}},
-          data: effectiveorders
+          data: allavg
         },]
 
 
-      var Chart1 = this.drawbar(option, 'gotobedbar');
-      var Chart2 = this.drawbar(option1, 'gotobedbar1');
-      var Chart3 = this.drawbar(option2, 'gotobedbar2');
-      // echarts.connect([Chart1, Chart2, Chart3])
+
+      this.drawbar('gotobedbar',option);
+      this.drawbar('gotobedbar1',option1);
+      this.drawbar('gotobedbar2',option2);
     },
 
     getAllShop() {
@@ -445,6 +448,7 @@ export default {
     this.date = [statrDate, endDate]
 
     this.$nextTick(function () {
+      // this.drawbar('gotobedbar');
       var that = this;
       var resizeTimer = null;
       window.onresize = function () {
@@ -461,9 +465,8 @@ export default {
 <style scoped>
 
 #gotobedbar {
-  /*width: 100%;*/
+  width: 100%;
   min-height: 300px;
   margin-right: 15px;
-  height: auto;
 }
 </style>

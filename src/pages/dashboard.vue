@@ -98,7 +98,7 @@
       y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                  // 'top' ¦ 'bottom' ¦ 'center'
                                  // ¦ {number}（y坐标，单位px）
-      color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+      color: ['#1e90ff', '#22bb22', '#39fef4', '#d2691e'],
       feature: {
         mark: {show: true},
         dataView: {show: true, readOnly: false},
@@ -117,7 +117,7 @@
     xAxis: [
       {
         type: 'category',
-        boundaryGap: false,
+        boundaryGap: true,
         data: getBeforeDate(30)
       }
     ],

@@ -50,7 +50,9 @@
       <el-col :span="8">
         <div id="gotobedbar2"></div>
       </el-col>
-
+      <el-col :span="8">
+        <div id="gotobedbar3"></div>
+      </el-col>
     </el-row>
 
 
@@ -78,10 +80,11 @@ const getBeforeDate = (n) => {
   return list.reverse();
 }
 
+
 const option = {
-  color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺营业额',
+    text: '点金次数',
     left: 'center',
   },
   tooltip: {
@@ -92,7 +95,7 @@ const option = {
   },
 
   legend: {
-    data: ['营业额'],
+    data: ['点金次数'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -147,9 +150,9 @@ const option = {
   series: []
 }
 const option1 = {
-  color: ['#22bb22', '#4b0082', '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺收入',
+    text: '点金花费',
     left: 'center',
   },
   tooltip: {
@@ -160,7 +163,7 @@ const option1 = {
   },
 
   legend: {
-    data: ['收入'],
+    data: ['点金花费'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -175,7 +178,7 @@ const option1 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1efff4'],
+    color: ['#70d1d5'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -215,9 +218,9 @@ const option1 = {
   series: []
 }
 const option2 = {
-  color: [ '#d2691e'],
+  color: ['#70d1d5'],
   title: {
-    text: '美团店铺订单',
+    text: '铂金次数',
     left: 'center',
   },
   tooltip: {
@@ -228,7 +231,75 @@ const option2 = {
   },
 
   legend: {
-    data: ['订单'],
+    data: ['铂金次数'],
+    orient: 'vertical',
+    left: 'right',
+    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#70d1d5'],
+    feature: {
+      mark: {show: true},
+      // dataView: {show: true, readOnly: false},
+      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: 'slider',
+      show: true,
+      xAxisIndex: [0],
+    },
+    {
+      type: 'slider',
+      show: true,
+      yAxisIndex: [0],
+      left: '93%',
+    },
+  ],
+
+
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: []
+}
+const option3 = {
+  color: ['#70d1d5'],
+  title: {
+    text: '铂金花费',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ['铂金花费'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -282,10 +353,8 @@ const option2 = {
   ],
   series: []
 }
-
-
 export default {
-  name: "orderData",
+  name: "promoSpot",
   data() {
     return {
       date: '',
@@ -294,7 +363,7 @@ export default {
     }
   },
   methods: {
-    drawbar(option, id) {
+    drawbar(option,id) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
       height -= 120;
@@ -315,7 +384,7 @@ export default {
         return
       }
       let times = "startTime=" + this.date[0] + "&endTime=" + this.date[1] + "&shopId=" + this.shopId
-      this.$http.get(api.MT_BUS_DATE + "?" + times)
+      this.$http.get(api.MT_PROMOSPOT + "?" + times)
         .then(res => {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
@@ -337,18 +406,18 @@ export default {
     updateBase(dateSours) {
 
       let lista = [];
-      let turnovers = [];
-      let effectiveorders = [];
-      let settleacc = [];
+      let cpcclickcount = [];
+      let cpcprice = [];
+      let bjcpmshowcount = [];
+      let bjcpmshowprice = [];
       dateSours.forEach(function (value) {
-        lista.push(value['date'])
-        turnovers.push(value['turnover'])
-        effectiveorders.push(value['effectiveorders'])
-        settleacc.push(value['settleacc'])
+        // lista.push(value['date'])
+        lista =getBeforeDate(30)
+        cpcclickcount.push(value['cpcclickcount'])
+        cpcprice.push(value['cpcprice'])
+        bjcpmshowcount.push(value['bjcpmshowcount'])
+        bjcpmshowprice.push(value['bjcpmshowprice'])
       })
-      console.log(turnovers)
-      console.log(effectiveorders)
-      console.log(settleacc)
 
       option.xAxis = [
         {
@@ -360,11 +429,11 @@ export default {
 
       option.series = [
         {
-          name: '营业额',
+          name: '点金次数',
           type: 'bar',
-          tiled: '总量',
+          tiled: '点金次数',
           areaStyle: {normal: {}},
-          data: turnovers
+          data: cpcclickcount
         },]
 
       option1.xAxis = [
@@ -377,11 +446,11 @@ export default {
 
       option1.series = [
         {
-          name: '收入',
+          name: '点金花费',
           type: 'bar',
-          tiled: '收入',
+          tiled: '点金花费',
           areaStyle: {normal: {}},
-          data: settleacc
+          data: cpcprice
         },]
 
       option2.xAxis = [
@@ -394,18 +463,34 @@ export default {
 
       option2.series = [
         {
-          name: '订单',
+          name: '铂金次数',
           type: 'bar',
-          tiled: '订单',
+          tiled: '铂金次数',
           areaStyle: {normal: {}},
-          data: effectiveorders
+          data: bjcpmshowcount
         },]
 
+      option3.xAxis = [
+        {
+          type: 'category',
+          boundaryGap: true,
+          data: lista
+        }
+      ]
+
+      option3.series = [
+        {
+          name: '铂金花费',
+          type: 'bar',
+          tiled: '铂金花费',
+          areaStyle: {normal: {}},
+          data: bjcpmshowprice
+        },]
 
       var Chart1 = this.drawbar(option, 'gotobedbar');
       var Chart2 = this.drawbar(option1, 'gotobedbar1');
       var Chart3 = this.drawbar(option2, 'gotobedbar2');
-      // echarts.connect([Chart1, Chart2, Chart3])
+      var Chart4 = this.drawbar(option3, 'gotobedbar3');
     },
 
     getAllShop() {
@@ -443,7 +528,6 @@ export default {
     let statrDate = dateFormat("YYYYmmdd", dt)
     console.log([statrDate, endDate])
     this.date = [statrDate, endDate]
-
     this.$nextTick(function () {
       var that = this;
       var resizeTimer = null;
@@ -464,6 +548,5 @@ export default {
   /*width: 100%;*/
   min-height: 300px;
   margin-right: 15px;
-  height: auto;
 }
 </style>

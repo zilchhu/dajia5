@@ -6,6 +6,19 @@
       <el-col :span="24">
 
         <el-form :inline="true" class="demo-form-inline">
+          <el-form-item label="时间">
+            <div class="block">
+              <el-date-picker
+                v-model="date"
+                type="daterange"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="yyyyMMdd"
+                default-value="2010-10-01">
+              </el-date-picker>
+            </div>
+          </el-form-item>
+
           <el-form-item label="店铺">
             <el-select v-model="shopId" filterable placeholder="请选择店铺">
 
@@ -17,7 +30,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
@@ -37,7 +49,6 @@
       <el-col :span="8">
         <div id="gotobedbar2"></div>
       </el-col>
-
       <el-col :span="8">
         <div id="gotobedbar3"></div>
       </el-col>
@@ -53,11 +64,9 @@
       <el-col :span="8">
         <div id="gotobedbar6"></div>
       </el-col>
-
       <el-col :span="8">
         <div id="gotobedbar7"></div>
       </el-col>
-
       <el-col :span="8">
         <div id="gotobedbar8"></div>
       </el-col>
@@ -87,10 +96,14 @@ const getBeforeDate = (n) => {
   }
   return list.reverse();
 }
-const option = {
+
+var titles = ['全部流量', '自然流量', '付费流量'];
+
+
+const   option = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺评论',
+    text: '全部流量-曝光次数',
     left: 'center',
   },
   tooltip: {
@@ -101,7 +114,7 @@ const option = {
   },
 
   legend: {
-    data: ['评论'],
+    data: ['成本'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -158,7 +171,7 @@ const option = {
 const option1 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺订单',
+    text: '全部流量-入店次数',
     left: 'center',
   },
   tooltip: {
@@ -169,7 +182,7 @@ const option1 = {
   },
 
   legend: {
-    data: ['订单'],
+    data: ['推广费'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -226,7 +239,7 @@ const option1 = {
 const option2 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺评分',
+    text: '全部流量-点击率',
     left: 'center',
   },
   tooltip: {
@@ -237,7 +250,7 @@ const option2 = {
   },
 
   legend: {
-    data: ['评分'],
+    data: ['有效订单'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -294,7 +307,7 @@ const option2 = {
 const option3 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺推广消费',
+    text: '自然流量-曝光次数',
     left: 'center',
   },
   tooltip: {
@@ -305,7 +318,7 @@ const option3 = {
   },
 
   legend: {
-    data: ['推广消费'],
+    data: ['收入'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -362,7 +375,7 @@ const option3 = {
 const option4 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺营业额',
+    text: '自然流量-入店次数',
     left: 'center',
   },
   tooltip: {
@@ -373,7 +386,7 @@ const option4 = {
   },
 
   legend: {
-    data: ['营业额'],
+    data: ['推广比率'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -430,7 +443,7 @@ const option4 = {
 const option5 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺客单价',
+    text: '自然流量-点击率',
     left: 'center',
   },
   tooltip: {
@@ -441,7 +454,7 @@ const option5 = {
   },
 
   legend: {
-    data: ['客单价'],
+    data: ['成本比例'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -498,7 +511,7 @@ const option5 = {
 const option6 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺曝光',
+    text: '付费流量-曝光次数',
     left: 'center',
   },
   tooltip: {
@@ -509,7 +522,7 @@ const option6 = {
   },
 
   legend: {
-    data: ['曝光'],
+    data: ['单价'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -524,7 +537,7 @@ const option6 = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1eff8f'],
+    color: ['#70d1d5'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -563,10 +576,10 @@ const option6 = {
   ],
   series: []
 }
-const option7= {
+const option7 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺进店率',
+    text: '付费流量-入店次数',
     left: 'center',
   },
   tooltip: {
@@ -577,7 +590,7 @@ const option7= {
   },
 
   legend: {
-    data: ['营业额'],
+    data: ['成本比例'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -592,7 +605,7 @@ const option7= {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e1eff'],
+    color: ['#70d1d5'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -634,7 +647,7 @@ const option7= {
 const option8 = {
   color: ['#70d1d5'],
   title: {
-    text: '美团店铺下单率',
+    text: '付费流量-点击率',
     left: 'center',
   },
   tooltip: {
@@ -645,7 +658,7 @@ const option8 = {
   },
 
   legend: {
-    data: ['收入'],
+    data: ['单价'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -700,10 +713,8 @@ const option8 = {
   series: []
 }
 
-
-
 export default {
-  name: "orderData",
+  name: "BusinAnaly",
   data() {
     return {
       date: '',
@@ -712,14 +723,6 @@ export default {
     }
   },
   methods: {
-
-    sortByKey(array, key) {
-      return array.sort(function (a, b) {
-        var x = a[key];
-        var y = b[key];
-        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-      });
-    },
     drawbar(id, option) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
@@ -727,11 +730,6 @@ export default {
       o.style.height = height + "px";
       this.chart = echarts.init(o, 'macarons');
       this.chart.setOption(option);
-      this.chart.on('click', function (params) {
-        // 控制台打印数据的名称
-        debugger
-        console.log(params.name);
-      });
       return this.chart
     },
     onSubmit() {
@@ -745,13 +743,12 @@ export default {
         });
         return
       }
-      let parm = "shopId=" + this.shopId
-      this.$http.get(api.PB_NEW_SHOP + "?" + parm)
+      let times = "startTime=" + this.date[0] + "&endTime=" + this.date[1] + "&shopId=" + this.shopId
+      this.$http.get(api.MT_BUSIN_ANALY + "?" + times)
         .then(res => {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
-
             if (resData.length > 0) {
               this.$message('操作成功');
               this.updateBase(resData)
@@ -766,204 +763,198 @@ export default {
     },
 
     updateBase(dateSours) {
-
-      let lista = [];
-      let evaluate = [];
-      let order = [];
-      let bizscore = [];
-      let moment = [];
-      let turnover = [];
-      let unitprice = [];
-      let overview = [];
-      let entryrate = [];
-      let orderrate = [];
-
-      dateSours = this.sortByKey(dateSours, 'date')
+      let mapType = {
+        '0': {
+          'clickrate': [],
+          'visitcnt': [],
+          'exposecnt': [],
+          'lista': []
+        },
+        '1': {
+          'clickrate': [],
+          'visitcnt': [],
+          'exposecnt': [],
+          'lista': []
+        },
+        '2': {
+          'clickrate': [],
+          'visitcnt': [],
+          'exposecnt': [],
+          'lista': []
+        }
+      }
       dateSours.forEach(function (value) {
-        lista.push(value['date'])
-        evaluate.push(value['evaluate'])
-        order.push(value['order'])
-        bizscore.push(value['bizscore'])
-        moment.push(value['moment'])
-        turnover.push(value['turnover'])
-        unitprice.push(value['unitprice'])
-        overview.push(value['overview'])
-        entryrate.push(value['entryrate'])
-        orderrate.push(value['orderrate'])
-
+        mapType[value['tabtype']]['clickrate'].push(value['clickrate'] < 0? 0:value['clickrate']  )
+        mapType[value['tabtype']]['visitcnt'].push(value['visitcnt'] < 0 ? 0 :value['visitcnt']  )
+        mapType[value['tabtype']]['exposecnt'].push(value['exposecnt'] < 0 ? 0:value['exposecnt'])
+        mapType[value['tabtype']]['lista'].push(value['date'])
       })
-
       option.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option.series = [
         {
-          name: '评论',
-          type: 'bar',
-          tiled: '评论',
+          name: '曝光次数',
+          type: 'line',
+          tiled: '曝光次数',
           areaStyle: {normal: {}},
-          data: evaluate
-        },]
+          data: mapType['0']['visitcnt']
+        },
 
+
+      ]
       option1.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option1.series = [
         {
-          name: '订单',
-          type: 'bar',
-          tiled: '订单',
+          name: '入店次数',
+          type: 'line',
+          tiled: '入店次数',
           areaStyle: {normal: {}},
-          data: order
-        },]
-
+          data: mapType['0']['exposecnt']
+        },
+      ]
       option2.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option2.series = [
+
         {
-          name: '评分',
-          type: 'bar',
-          tiled: '评分',
+          name: '点击率',
+          type: 'line',
+          tiled: '点击率',
           areaStyle: {normal: {}},
-          data: bizscore
-        },]
+          data: mapType['0']['clickrate']
+        }
+      ]
 
 
       option3.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option3.series = [
         {
-          name: '推广消费',
-          type: 'bar',
-          tiled: '推广消费  ',
+          name: '曝光次数',
+          type: 'line',
+          tiled: '曝光次数',
           areaStyle: {normal: {}},
-          data: moment
-        },]
+          data: mapType['0']['visitcnt']
+        },
+      ]
 
       option4.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option4.series = [
         {
-          name: '营业额',
-          type: 'bar',
-          tiled: '营业额',
+          name: '入店次数',
+          type: 'line',
+          tiled: '入店次数',
           areaStyle: {normal: {}},
-          data: turnover
-        },]
-
+          data: mapType['0']['exposecnt']
+        },
+      ]
       option5.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option5.series = [
         {
-          name: '客单价',
-          type: 'bar',
-          tiled: '客单价',
+          name: '点击率',
+          type: 'line',
+          tiled: '点击率',
           areaStyle: {normal: {}},
-          data: unitprice
-        },]
+          data: mapType['0']['clickrate']
+        }
+      ]
 
       option6.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option6.series = [
         {
-          name: '曝光',
-          type: 'bar',
-          tiled: '曝光',
+          name: '曝光次数',
+          type: 'line',
+          tiled: '曝光次数',
           areaStyle: {normal: {}},
-          data: overview
-        },]
+          data: mapType['0']['visitcnt']
+        },
+      ]
 
       option7.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option7.series = [
         {
-          name: '进店率',
-          type: 'bar',
-          tiled: '进店率',
+          name: '入店次数',
+          type: 'line',
+          tiled: '入店次数',
           areaStyle: {normal: {}},
-          data: entryrate
-        },]
-
+          data: mapType['0']['exposecnt']
+        },
+      ]
       option8.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
-          data: lista
+          data: mapType['0']['lista']
         }
       ]
-
       option8.series = [
         {
-          name: '下单率',
-          type: 'bar',
-          tiled: '下单率',
+          name: '点击率',
+          type: 'line',
+          tiled: '点击率',
           areaStyle: {normal: {}},
-          data: orderrate
-        },]
+          data: mapType['0']['clickrate']
+        }
 
-
-
-
-      let drawbar1  =   this.drawbar('gotobedbar', option);
-      let drawbar2  =  this.drawbar('gotobedbar1', option1);
-      let drawbar3  =  this.drawbar('gotobedbar2', option2);
-      let drawbar4  =   this.drawbar('gotobedbar3', option3);
-      let drawbar5  =  this.drawbar('gotobedbar4', option4);
-      let drawbar6  =  this.drawbar('gotobedbar5', option5);
-      let drawbar7  =   this.drawbar('gotobedbar6', option6);
-      let drawbar8  =  this.drawbar('gotobedbar7', option7);
-      let drawbar9  =  this.drawbar('gotobedbar8', option8);
-      // echarts.connect([drawbar1,drawbar2,drawbar3])
+      ]
+      this.drawbar('gotobedbar', option);
+      this.drawbar('gotobedbar1', option1);
+      this.drawbar('gotobedbar2', option2);
+      this.drawbar('gotobedbar3', option3);
+      this.drawbar('gotobedbar4', option4);
+      this.drawbar('gotobedbar5', option5);
+      this.drawbar('gotobedbar6', option6);
+      this.drawbar('gotobedbar7', option7);
+      this.drawbar('gotobedbar8', option8);
     },
 
     getAllShop() {
-      this.$http.get(api.PB_NEW_SHOP_INFO)
+      this.$http.get(api.MT_ALL_SHOP)
         .then(res => {
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
@@ -975,7 +966,7 @@ export default {
                 label: '全部'
               }]
               resData.forEach(function (va) {
-                op.push({value: va.shopId, label: va.shopName})
+                op.push({value: va.wmpoiid, label: va.reptileType})
               });
               this.options = op
               console.log(op)
@@ -999,6 +990,7 @@ export default {
     this.date = [statrDate, endDate]
 
     this.$nextTick(function () {
+      // this.drawbar('gotobedbar');
       var that = this;
       var resizeTimer = null;
       window.onresize = function () {
@@ -1016,7 +1008,7 @@ export default {
 
 #gotobedbar {
   /*width: 100%;*/
-  /*min-height: 300px;*/
-  /*margin-right: 15px;*/
+  min-height: 300px;
+  margin-right: 15px;
 }
 </style>

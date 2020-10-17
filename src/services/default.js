@@ -118,6 +118,109 @@ export default {
                 "icon": "fa fa-area-chart",
                 "children": [],
                 "isShow": "1"
+              },{
+                "id": 914,
+                "parentId": 92,
+                "sort": 0,
+                "name": "流量数据",
+                "href": "/mt/BusinAnaly",
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              }
+              ,{
+                "id": 915,
+                "parentId": 92,
+                "sort": 0,
+                "name": "新客数据",
+                "href": "/mt/newCusManag",
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              }
+              ,{
+                "id": 916,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺排名",
+                "href": "/mt/shopRank",
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              }
+              ,{
+                "id": 917,
+                "parentId": 92,
+                "sort": 0,
+                "name": "推广消费",
+                "href": '/mt/promoSpot',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              }
+              ,{
+                "id": 918,
+                "parentId": 92,
+                "sort": 0,
+                "name": "配送信息",
+                "href": '/mt/shopSpareas',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 919,
+                "parentId": 92,
+                "sort": 0,
+                "name": "经营品类",
+                "href": '/mt/category',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 920,
+                "parentId": 92,
+                "sort": 0,
+                "name": "产品销量",
+                "href": '/mt/foodAmount',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 921,
+                "parentId": 92,
+                "sort": 0,
+                "name": "门店活动",
+                "href": '/mt/shopActivi',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 922,
+                "parentId": 92,
+                "sort": 0,
+                "name": "门店回复率",
+                "href": '/mt/replyRate',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 922,
+                "parentId": 92,
+                "sort": 0,
+                "name": "营推数据",
+                "href": '/mt/operating',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 923,
+                "parentId": 92,
+                "sort": 0,
+                "name": "门店曝光",
+                "href": '/mt/BusinPassenger',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
               }
             ],
             "isShow": "1"

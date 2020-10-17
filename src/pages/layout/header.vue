@@ -26,7 +26,7 @@
           </el-dropdown-menu>-->
 
 
-          <div class="el-dropdown-link">
+<!--          <div class="el-dropdown-link">
             <img :src='userInfo.avatar' style="width: 25px;height: 25px;border-radius: 50%; vertical-align: middle;" alt="U">
             {{userInfo.name}}
           </div>
@@ -45,7 +45,7 @@
                 <el-button type="default" @click="logout">退出</el-button>
               </div>
             </div>
-          </el-dropdown-menu>
+          </el-dropdown-menu>-->
 
       </div>
 

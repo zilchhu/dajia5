@@ -131,7 +131,7 @@ const option = {
   xAxis: [
     {
       type: 'category',
-      boundaryGap: false,
+      boundaryGap: true,
       data: getBeforeDate(30)
     }
   ],
@@ -237,12 +237,10 @@ export default {
       })
       console.log(lista)
       console.log(lists)
-      // option.xAxis = lista
-      // option.series = lists
       option.xAxis = [
         {
           type: 'category',
-          boundaryGap: false,
+          boundaryGap: true,
           data: lista
         }
       ]

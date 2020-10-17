@@ -54,5 +54,36 @@ export const PB_NEW_SHOP = CONTEXT + '/app/mt/newShop/track'
 //新店店铺信息
 export const PB_NEW_SHOP_INFO = CONTEXT + '/app/mt/AllShop/Shop'
 
+//店铺流量数据
+export const MT_BUSIN_ANALY = CONTEXT + '/app/mt/BusinAnaly/Source'
 
+//客户数据
+export const MT_CUSMANAG = CONTEXT + '/app/mt/cusManag/Analy'
+
+//商铺排名
+export const MT_SHOPRANK = CONTEXT + '/app/mt/shopDetail/scoreDate'
+
+
+//店铺推广铂金
+export const MT_PROMOSPOT = CONTEXT + '/app/mt/promoSpot/gold'
+
+//店铺配送
+export const MT_SPAREAS = CONTEXT + '/app/mt/Spareas/Info'
+//经营品类
+export const MT_CATEGORY = CONTEXT + '/app/mt/Shop/Category'
+
+//商铺销量
+export const MT_FOODAMOUNT = CONTEXT + '/app/mt/foodAmount/info'
+
+// 门店活动
+export const MT_ACTIVITMY = CONTEXT + '/app/mt/Market/activitMy'
+
+// 门店回复率
+export const MT_REPLYRATE = CONTEXT + '/app/mt/ShopBase/Info'
+
+
+// 盈推表
+export const MT_OPERATING = CONTEXT + '/app/mtelm/operating/data'
+// 门店曝光
+export const MT_BUSINPASSENGER = CONTEXT + '/app/mt/BusinPassenger/Flow'
 

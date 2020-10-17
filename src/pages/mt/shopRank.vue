@@ -39,18 +39,10 @@
 
 
       </el-col>
-      <el-col :span="8">
+
+      <el-col :span="24">
         <div id="gotobedbar"></div>
       </el-col>
-
-      <el-col :span="8">
-        <div id="gotobedbar1"></div>
-      </el-col>
-
-      <el-col :span="8">
-        <div id="gotobedbar2"></div>
-      </el-col>
-
     </el-row>
 
 
@@ -58,9 +50,11 @@
 </template>
 
 <script>
-import * as api from "../../api";
-import {dateFormat} from "../../common/utils";
-import echarts from "echarts";
+import echarts from 'echarts';
+import macarons from 'echarts/theme/macarons';
+import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {dateFormat} from '../../common/utils'
+import * as api from "../../api"
 
 const getBeforeDate = (n) => {
   var list = [];
@@ -79,9 +73,8 @@ const getBeforeDate = (n) => {
 }
 
 const option = {
-  color: ['#1e90ff', '#22bb22', '#4b0082', '#d2691e'],
   title: {
-    text: '美团店铺营业额',
+    text: '商圈排名',
     left: 'center',
   },
   tooltip: {
@@ -92,7 +85,7 @@ const option = {
   },
 
   legend: {
-    data: ['营业额'],
+    data: ['商圈排名'],
     orient: 'vertical',
     left: 'right',
     top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
@@ -107,7 +100,7 @@ const option = {
     y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                // 'top' ¦ 'bottom' ¦ 'center'
                                // ¦ {number}（y坐标，单位px）
-    color: ['#1e1eff'],
+    color: ['#1e90ff'],
     feature: {
       mark: {show: true},
       // dataView: {show: true, readOnly: false},
@@ -118,17 +111,7 @@ const option = {
   },
   calculable: true,
   dataZoom: [
-    {
-      type: 'slider',
-      show: true,
-      xAxisIndex: [0],
-    },
-    {
-      type: 'slider',
-      show: true,
-      yAxisIndex: [0],
-      left: '93%',
-    },
+
   ],
 
 
@@ -144,164 +127,59 @@ const option = {
       type: 'value'
     }
   ],
-  series: []
-}
-const option1 = {
-  color: ['#22bb22', '#4b0082', '#d2691e'],
-  title: {
-    text: '美团店铺收入',
-    left: 'center',
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-    }
-  },
-
-  legend: {
-    data: ['收入'],
-    orient: 'vertical',
-    left: 'right',
-    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20
-  },
-  toolbox: {
-    show: true,
-    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
-    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
-                               // 'center' ¦ 'left' ¦ 'right'
-                               // ¦ {number}（x坐标，单位px）
-    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
-                               // 'top' ¦ 'bottom' ¦ 'center'
-                               // ¦ {number}（y坐标，单位px）
-    color: ['#1efff4'],
-    feature: {
-      mark: {show: true},
-      // dataView: {show: true, readOnly: false},
-      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-      restore: {show: true},
-      saveAsImage: {show: true}
-    }
-  },
-  calculable: true,
-  dataZoom: [
+  series: [
     {
-      type: 'slider',
-      show: true,
-      xAxisIndex: [0],
-    },
-    {
-      type: 'slider',
-      show: true,
-      yAxisIndex: [0],
-      left: '93%',
-    },
-  ],
-
-
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: true,
-      data: getBeforeDate(30)
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: []
-}
-const option2 = {
-  color: [ '#d2691e'],
-  title: {
-    text: '美团店铺订单',
-    left: 'center',
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-    }
-  },
-
-  legend: {
-    data: ['订单'],
-    orient: 'vertical',
-    left: 'right',
-    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20
-  },
-  toolbox: {
-    show: true,
-    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
-    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
-                               // 'center' ¦ 'left' ¦ 'right'
-                               // ¦ {number}（x坐标，单位px）
-    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
-                               // 'top' ¦ 'bottom' ¦ 'center'
-                               // ¦ {number}（y坐标，单位px）
-    color: ['#1eff8f'],
-    feature: {
-      mark: {show: true},
-      // dataView: {show: true, readOnly: false},
-      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-      restore: {show: true},
-      saveAsImage: {show: true}
-    }
-  },
-  calculable: true,
-  dataZoom: [
-    {
-      type: 'slider',
-      show: true,
-      xAxisIndex: [0],
-    },
-    {
-      type: 'slider',
-      show: true,
-      yAxisIndex: [0],
-      left: '93%',
-    },
-  ],
-
-
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: true,
-      data: getBeforeDate(30)
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: []
+      name: '商圈排名',
+      type: 'line',
+      tiled: '商圈排名',
+      areaStyle: {normal: {}},
+      data: function () {
+        var list = [];
+        for (var i = 1; i <= 30; i++) {
+          list.push(Math.round(Math.random() * 500) / 100);
+        }
+        return list;
+      }()
+    },]
 }
 
 
 export default {
-  name: "orderData",
+  name: "shopRank.vue",
   data() {
     return {
       date: '',
-      shopId: '',
-      options: [],
+      options: [{
+        value: -1,
+        label: '全部'
+      }, {
+        value: 2924399,
+        label: '古御贡茶•手抓饼•小吃（大芬信和店）'
+      }, {
+        value: 4799060,
+        label: '古御贡茶•手抓饼•小吃（龙岗罗马公元店）'
+      }, {
+        value: 6119122,
+        label: '古御贡茶•手抓饼•小吃（龙岗爱联店）'
+      }, {
+        value: 6434760,
+        label: '喜三德甜品•手工芋圆（龙岗爱联店）'
+      }, {
+        value: 6914754,
+        label: '古御贡茶•手抓饼•小吃（横岗店）'
+      }],
+      shopId: -1,
     }
   },
   methods: {
-    drawbar(option, id) {
+
+    drawbar(id) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
       height -= 120;
       o.style.height = height + "px";
       this.chart = echarts.init(o, 'macarons');
       this.chart.setOption(option);
-      return this.chart
     },
     onSubmit() {
       console.log('date' + this.date);
@@ -315,7 +193,7 @@ export default {
         return
       }
       let times = "startTime=" + this.date[0] + "&endTime=" + this.date[1] + "&shopId=" + this.shopId
-      this.$http.get(api.MT_BUS_DATE + "?" + times)
+      this.$http.get(api.MT_SHOPRANK + "?" + times)
         .then(res => {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
@@ -337,19 +215,13 @@ export default {
     updateBase(dateSours) {
 
       let lista = [];
-      let turnovers = [];
-      let effectiveorders = [];
-      let settleacc = [];
+      let lists = [];
       dateSours.forEach(function (value) {
         lista.push(value['date'])
-        turnovers.push(value['turnover'])
-        effectiveorders.push(value['effectiveorders'])
-        settleacc.push(value['settleacc'])
+        lists.push(value['ranknum'])
       })
-      console.log(turnovers)
-      console.log(effectiveorders)
-      console.log(settleacc)
-
+    console.log(lists)
+    console.log(lista)
       option.xAxis = [
         {
           type: 'category',
@@ -360,52 +232,14 @@ export default {
 
       option.series = [
         {
-          name: '营业额',
-          type: 'bar',
+          name: '排名',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
-          data: turnovers
+          data: lists
         },]
 
-      option1.xAxis = [
-        {
-          type: 'category',
-          boundaryGap: true,
-          data: lista
-        }
-      ]
-
-      option1.series = [
-        {
-          name: '收入',
-          type: 'bar',
-          tiled: '收入',
-          areaStyle: {normal: {}},
-          data: settleacc
-        },]
-
-      option2.xAxis = [
-        {
-          type: 'category',
-          boundaryGap: true,
-          data: lista
-        }
-      ]
-
-      option2.series = [
-        {
-          name: '订单',
-          type: 'bar',
-          tiled: '订单',
-          areaStyle: {normal: {}},
-          data: effectiveorders
-        },]
-
-
-      var Chart1 = this.drawbar(option, 'gotobedbar');
-      var Chart2 = this.drawbar(option1, 'gotobedbar1');
-      var Chart3 = this.drawbar(option2, 'gotobedbar2');
-      // echarts.connect([Chart1, Chart2, Chart3])
+      this.drawbar('gotobedbar');
     },
 
     getAllShop() {
@@ -432,8 +266,8 @@ export default {
         }).catch(
       )
     },
-  },
 
+  },
   mounted() {
     this.getAllShop()
     this.shopId = -1
@@ -445,6 +279,7 @@ export default {
     this.date = [statrDate, endDate]
 
     this.$nextTick(function () {
+      this.drawbar('gotobedbar');
       var that = this;
       var resizeTimer = null;
       window.onresize = function () {
@@ -454,16 +289,17 @@ export default {
         }, 300);
       }
     });
-  }
+  },
+
+
 }
 </script>
 
 <style scoped>
 
 #gotobedbar {
-  /*width: 100%;*/
-  min-height: 300px;
+  width: 100%;
+  min-height: 500px;
   margin-right: 15px;
-  height: auto;
 }
 </style>
