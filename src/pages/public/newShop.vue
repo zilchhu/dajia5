@@ -7,7 +7,7 @@
 
         <el-form :inline="true" class="demo-form-inline">
           <el-form-item label="店铺">
-            <el-select v-model="shopId" filterable placeholder="请选择店铺">
+            <el-select v-model="shopId" filterable placeholder="请选择店铺" @change="selectOne">
 
               <el-option
                 v-for="item in options"
@@ -712,7 +712,9 @@ export default {
     }
   },
   methods: {
-
+    selectOne(item){
+      window.sessionStorage.setItem("shop_info", item);
+    },
     sortByKey(array, key) {
       return array.sort(function (a, b) {
         var x = a[key];
@@ -961,7 +963,6 @@ export default {
       let drawbar9  =  this.drawbar('gotobedbar8', option8);
       // echarts.connect([drawbar1,drawbar2,drawbar3])
     },
-
     getAllShop() {
       this.$http.get(api.PB_NEW_SHOP_INFO)
         .then(res => {
@@ -1014,9 +1015,9 @@ export default {
 
 <style scoped>
 
-#gotobedbar {
-  /*width: 100%;*/
-  /*min-height: 300px;*/
-  /*margin-right: 15px;*/
+[id*=gotobedbar] {
+  min-height: 300px;
+  margin-right: 15px;
+  height: 300px !important;
 }
 </style>

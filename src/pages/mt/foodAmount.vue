@@ -7,7 +7,8 @@
         <el-form-item label="时间">
           <div class="block">
             <el-date-picker
-              v-model="date"
+                @change="dateChange"
+                v-model="date"
               type="daterange"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -18,7 +19,7 @@
         </el-form-item>
 
         <el-form-item label="店铺">
-          <el-select v-model="shopId" filterable placeholder="请选择店铺">
+          <el-select v-model="shopId" filterable placeholder="请选择店铺" @change="selectOne">
 
             <el-option
               v-for="item in options"
@@ -42,30 +43,25 @@
       <el-table
         :data="tableData"
         border
-        max-height="600"
+        max-height="550"
         style="width: 100%"
         >
         <el-table-column
-          type="index"
-          width="50">
+          fixed
+          prop="name"
+          label="名称"
+          width="120"
+        >
         </el-table-column>
 
-        <el-table-column v-for="(item, index) in colunmName" :key="item.id" :label="item.title" :prop="item.key" sortable="custom"
-                         align="center" width="65">
+        <el-table-column v-for="(item) in colunmName" :key="item" :label="item" :prop="item" sortable
+                         align="center" width="120">
           <!-- 数据的遍历  scope.row就代表数据的每一个对象-->
           <template slot-scope="scope">
-            <span>{{scope.row[itemTitle.key] }}</span>
+            <span>{{scope.row[item]}}</span>
           </template>
         </el-table-column>
 
-
-
-        <el-table-column
-          prop="insertDate"
-          label="日期"
-          :formatter="formatDates"
-        >
-        </el-table-column>
       </el-table>
     </el-col>
   </el-row>
@@ -106,6 +102,15 @@ export default {
     }
   },
   methods: {
+    dateChange(){
+      console.log('修改时间');
+      window.sessionStorage.setItem("changedate", this.date);
+      this.onSubmit()
+    },
+    selectOne(item){
+      window.sessionStorage.setItem("shop_info", item);
+      this.onSubmit()
+    },
     onSubmit() {
       console.log('date' + this.date);
       console.log('shopId' + this.shopId);
@@ -123,28 +128,26 @@ export default {
           console.log(res)
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
-
-            if (resData.length > 0) {
+            if (res.data.code === 0) {
               this.$message('操作成功');
-              let dateList = []
-              resData.forEach(function (value) {
-                // value['date'] = formatDate(value['insertDate'],'YY/MM/DD')
-                console.log(value)
-                /*dateList.push(value)*/
-              })
-
-              this.tableData = resData
-
+              let dateList =  resData['dateList']
+              let ListMap = resData['ListMap']
+              this.colunmName = dateList
+              this.tableData = ListMap
             } else {
               this.$message('数据为空')
             }
           }
-
         }).catch(e => {
         // this.$message('数据异常请联系管理员')
       })
     },
     getAllShop() {
+      let shop_all = window.sessionStorage.getItem("user-all-info")
+      if (shop_all){
+        this.options = JSON.parse(shop_all)
+        return
+      }
       this.$http.get(api.MT_ALL_SHOP)
         .then(res => {
           if (res.status === 200 && res.data.code === 0) {
@@ -161,6 +164,7 @@ export default {
               });
               this.options = op
               console.log(op)
+              window.sessionStorage.setItem("user-all-info", JSON.stringify(op));
             } else {
               this.$message('数据为空')
             }
@@ -194,13 +198,25 @@ export default {
   },
   mounted() {
     this.getAllShop()
+    let shop_info = window.sessionStorage.getItem("shop_info")
+    let changedate = window.sessionStorage.getItem("changedate")
+
     this.shopId = -1
-    let dt = new Date();
-    let endDate = dateFormat("YYYYmmdd", dt)
-    dt.setDate(dt.getDate() - 30)
-    let statrDate = dateFormat("YYYYmmdd", dt)
-    console.log([statrDate, endDate])
-    this.date = [statrDate, endDate]
+    console.log(shop_info)
+    if (shop_info){
+      this.shopId = shop_info
+    }
+    if (changedate){
+      this.date = changedate.split(",")
+    }else {
+      let dt = new Date();
+      let endDate = dateFormat("YYYYmmdd", dt)
+      dt.setDate(dt.getDate() - 30)
+      let statrDate = dateFormat("YYYYmmdd", dt)
+      console.log([statrDate, endDate])
+      this.date = [statrDate, endDate]
+      window.sessionStorage.setItem("changedate", this.date);
+    }
 
     this.$nextTick(function () {
       this.drawbar('gotobedbar');
@@ -213,10 +229,15 @@ export default {
         }, 300);
       }
     });
+    this.onSubmit()
   },
 }
 </script>
 
 <style scoped>
-
+[id*=gotobedbar] {
+  min-height: 300px;
+  margin-right: 15px;
+  height: 300px !important;
+}
 </style>

@@ -9,6 +9,7 @@
           <el-form-item label="时间">
             <div class="block">
               <el-date-picker
+                @change="dateChange"
                 v-model="date"
                 type="daterange"
                 start-placeholder="开始日期"
@@ -20,7 +21,7 @@
           </el-form-item>
 
           <el-form-item label="店铺">
-            <el-select v-model="shopId" filterable placeholder="请选择店铺">
+            <el-select v-model="shopId" filterable placeholder="请选择店铺" @change="selectOne">
 
               <el-option
                 v-for="item in options"
@@ -47,8 +48,14 @@
         <div id="gotobedbar1"></div>
       </el-col>
 
-      <el-col :span="8">
+<!--      <el-col :span="8">
         <div id="gotobedbar2"></div>
+      </el-col>-->
+      <el-col :span="8">
+        <div id="gotobedbar3"></div>
+      </el-col>
+      <el-col :span="8">
+        <div id="gotobedbar4"></div>
       </el-col>
 
     </el-row>
@@ -283,6 +290,142 @@ const option2 = {
   ],
   series: []
 }
+const option3 = {
+  color: ['#70d1d5'],
+  title: {
+    text: '新客人数',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ['新客人数'],
+    orient: 'vertical',
+    left: 'right',
+    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#70d1d5'],
+    feature: {
+      mark: {show: true},
+      // dataView: {show: true, readOnly: false},
+      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: 'slider',
+      show: true,
+      xAxisIndex: [0],
+    },
+    {
+      type: 'slider',
+      show: true,
+      yAxisIndex: [0],
+      left: '93%',
+    },
+  ],
+
+
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: []
+}
+const option4 = {
+  color: ['#70d1d5'],
+  title: {
+    text: '老客人数',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ['老客人数'],
+    orient: 'vertical',
+    left: 'right',
+    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#70d1d5'],
+    feature: {
+      mark: {show: true},
+      // dataView: {show: true, readOnly: false},
+      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: 'slider',
+      show: true,
+      xAxisIndex: [0],
+    },
+    {
+      type: 'slider',
+      show: true,
+      yAxisIndex: [0],
+      left: '93%',
+    },
+  ],
+
+
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: []
+}
 export default {
   name: "newCusManag",
   data() {
@@ -293,6 +436,15 @@ export default {
     }
   },
   methods: {
+    dateChange(){
+      console.log('修改时间');
+      window.sessionStorage.setItem("changedate", this.date);
+      this.onSubmit()
+    },
+    selectOne(item){
+      window.sessionStorage.setItem("shop_info", item);
+      this.onSubmit()
+    },
     drawbar(id,option) {
       let o = document.getElementById(id);
       let height = document.documentElement.clientHeight;
@@ -403,15 +555,55 @@ export default {
           areaStyle: {normal: {}},
           data: allavg
         },]
+      option3.xAxis = [
+        {
+          type: 'category',
+          boundaryGap: true,
+          data: lista
+        }
+      ]
+
+      option3.series = [
+        {
+          name: '新客人数',
+          type: 'bar',
+          tiled: '总量',
+          areaStyle: {normal: {}},
+          data: newsingle
+        },]
+
+      option4.xAxis = [
+        {
+          type: 'category',
+          boundaryGap: true,
+          data: lista
+        }
+      ]
+
+      option4.series = [
+        {
+          name: '老客人数',
+          type: 'bar',
+          tiled: '总量',
+          areaStyle: {normal: {}},
+          data: oldsingle
+        },]
 
 
 
       this.drawbar('gotobedbar',option);
       this.drawbar('gotobedbar1',option1);
-      this.drawbar('gotobedbar2',option2);
+      // this.drawbar('gotobedbar2',option2);
+      this.drawbar('gotobedbar3',option3);
+      this.drawbar('gotobedbar4',option4);
     },
 
     getAllShop() {
+      let shop_all = window.sessionStorage.getItem("user-all-info")
+      if (shop_all){
+        this.options = JSON.parse(shop_all)
+        return
+      }
       this.$http.get(api.MT_ALL_SHOP)
         .then(res => {
           if (res.status === 200 && res.data.code === 0) {
@@ -428,6 +620,7 @@ export default {
               });
               this.options = op
               console.log(op)
+              window.sessionStorage.setItem("user-all-info", JSON.stringify(op));
             } else {
               this.$message('数据为空')
             }
@@ -439,13 +632,25 @@ export default {
 
   mounted() {
     this.getAllShop()
+    let shop_info = window.sessionStorage.getItem("shop_info")
+    let changedate = window.sessionStorage.getItem("changedate")
+
     this.shopId = -1
-    let dt = new Date();
-    let endDate = dateFormat("YYYYmmdd", dt)
-    dt.setDate(dt.getDate() - 30)
-    let statrDate = dateFormat("YYYYmmdd", dt)
-    console.log([statrDate, endDate])
-    this.date = [statrDate, endDate]
+    console.log(shop_info)
+    if (shop_info){
+      this.shopId = shop_info
+    }
+    if (changedate){
+      this.date = changedate.split(",")
+    }else {
+      let dt = new Date();
+      let endDate = dateFormat("YYYYmmdd", dt)
+      dt.setDate(dt.getDate() - 30)
+      let statrDate = dateFormat("YYYYmmdd", dt)
+      console.log([statrDate, endDate])
+      this.date = [statrDate, endDate]
+      window.sessionStorage.setItem("changedate", this.date);
+    }
 
     this.$nextTick(function () {
       // this.drawbar('gotobedbar');
@@ -458,15 +663,16 @@ export default {
         }, 300);
       }
     });
+    this.onSubmit()
   }
 }
 </script>
 
 <style scoped>
 
-#gotobedbar {
-  width: 100%;
+[id*=gotobedbar] {
   min-height: 300px;
   margin-right: 15px;
+  height: 300px !important;
 }
 </style>

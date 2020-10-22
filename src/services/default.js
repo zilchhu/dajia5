@@ -2,11 +2,11 @@ export default {
   login: {
     "user": {
       "id": "310000198406275362",
-      "name": "叶洋",
+      "name": "",
       "nickName": "Taylor",
-      "phone": "14309472560",
+      "phone": "",
       "age": 74,
-      "address": "浙江省 绍兴市 上虞市",
+      "address": "",
       "isMale": false,
       "email": "w.pdmenv@rwfwadthss.tr",
       "createTime": "1976-08-15 06:37:12",
@@ -39,36 +39,6 @@ export default {
     "usable": "1",
     "remarks": "",
     "children": []
-  }, {
-    "id": 27,
-    "delFlag": 0,
-    "parentId": null,
-    "sort": 1,
-    "name": "客服主管",
-    "enName": "server_manager",
-    "usable": "1",
-    "remarks": "",
-    "children": [{
-      "id": 28,
-      "delFlag": 0,
-      "parentId": 27,
-      "sort": 0,
-      "name": "售后客服",
-      "enName": "server1",
-      "usable": "1",
-      "remarks": "",
-      "children": []
-    }, {
-      "id": 29,
-      "delFlag": 0,
-      "parentId": 27,
-      "sort": 1,
-      "name": "售前客服",
-      "enName": "server2",
-      "usable": "1",
-      "remarks": "",
-      "children": []
-    }]
   }],
   userList: {
     records: [], total: 99
@@ -90,22 +60,93 @@ export default {
             "icon": "fa fa-bank",
             "children": [
               {
-                "id": 912,
-                "parentId": 92,
-                "sort": 0,
-                "name": "店铺营业",
-                "href": "/mt/bizdata/orderData",
-                "icon": "fa fa-bank",
-                "children": [],
-                "isShow": "1"
-              },
-              {
                 "id": 914,
                 "parentId": 92,
                 "sort": 0,
                 "name": "店铺营业",
                 "href": "/mt/bizdata/orderData1",
                 "icon": "fa fa-bank",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 923,
+                "parentId": 92,
+                "sort": 1,
+                "name": "店铺曝光",
+                "href": '/mt/BusinPassenger',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 914,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺流量",
+                "href": "/mt/BusinAnaly",
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 915,
+                "parentId": 92,
+                "sort": 0,
+                "name": "新客数据",
+                "href": "/mt/newCusManag",
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 921,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺活动",
+                "href": '/mt/shopActivi',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 918,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺配送",
+                "href": '/mt/shopSpareas',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 917,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺推广",
+                "href": '/mt/promoSpot',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 922,
+                "parentId": 92,
+                "sort": 0,
+                "name": "线下指标",
+                "href": '/mt/replyRate',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 919,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺品类",
+                "href": '/mt/category',
+                "icon": "fa fa-area-chart",
+                "children": [],
+                "isShow": "1"
+              },{
+                "id": 920,
+                "parentId": 92,
+                "sort": 0,
+                "name": "店铺销量",
+                "href": '/mt/foodAmount',
+                "icon": "fa fa-area-chart",
                 "children": [],
                 "isShow": "1"
               },
@@ -118,26 +159,8 @@ export default {
                 "icon": "fa fa-area-chart",
                 "children": [],
                 "isShow": "1"
-              },{
-                "id": 914,
-                "parentId": 92,
-                "sort": 0,
-                "name": "流量数据",
-                "href": "/mt/BusinAnaly",
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
               }
-              ,{
-                "id": 915,
-                "parentId": 92,
-                "sort": 0,
-                "name": "新客数据",
-                "href": "/mt/newCusManag",
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              }
+
               ,{
                 "id": 916,
                 "parentId": 92,
@@ -149,61 +172,6 @@ export default {
                 "isShow": "1"
               }
               ,{
-                "id": 917,
-                "parentId": 92,
-                "sort": 0,
-                "name": "推广消费",
-                "href": '/mt/promoSpot',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              }
-              ,{
-                "id": 918,
-                "parentId": 92,
-                "sort": 0,
-                "name": "配送信息",
-                "href": '/mt/shopSpareas',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              },{
-                "id": 919,
-                "parentId": 92,
-                "sort": 0,
-                "name": "经营品类",
-                "href": '/mt/category',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              },{
-                "id": 920,
-                "parentId": 92,
-                "sort": 0,
-                "name": "产品销量",
-                "href": '/mt/foodAmount',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              },{
-                "id": 921,
-                "parentId": 92,
-                "sort": 0,
-                "name": "门店活动",
-                "href": '/mt/shopActivi',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              },{
-                "id": 922,
-                "parentId": 92,
-                "sort": 0,
-                "name": "门店回复率",
-                "href": '/mt/replyRate',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              },{
                 "id": 922,
                 "parentId": 92,
                 "sort": 0,
@@ -212,48 +180,11 @@ export default {
                 "icon": "fa fa-area-chart",
                 "children": [],
                 "isShow": "1"
-              },{
-                "id": 923,
-                "parentId": 92,
-                "sort": 0,
-                "name": "门店曝光",
-                "href": '/mt/BusinPassenger',
-                "icon": "fa fa-area-chart",
-                "children": [],
-                "isShow": "1"
-              }
+              },
+
             ],
             "isShow": "1"
           },
-          {
-            "id": 93,
-            "parentId": 31,
-            "sort": 0,
-            "name": "活动数据",
-            "href": "/mt/activi/2",
-            "icon": "fa fa-area-chart",
-            "children": [],
-            "isShow": "1"
-          },
-          {
-            "id": 99,
-            "parentId": 31,
-            "sort": 0,
-            "name": "用户数据",
-            "href": "/mt/activi/2",
-            "icon": "fa fa-area-chart",
-            "children": [              {
-              "id": 991,
-              "parentId": 99,
-              "sort": 0,
-              "name": "店铺评分",
-              "href": "/mt/bizdata/scoreDate",
-              "icon": "fa fa-dashboard",
-              "children": [],
-              "isShow": "1"
-            },],
-            "isShow": "1"
-          }
         ]
       , "isShow": "1"
     },

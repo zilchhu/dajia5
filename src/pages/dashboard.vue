@@ -10,7 +10,8 @@
         <el-form-item label="时间">
         <div class="block">
           <el-date-picker
-            v-model="date"
+                @change="dateChange"
+                v-model="date"
             type="daterange"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
@@ -21,7 +22,7 @@
         </el-form-item>
 
         <el-form-item label="店铺">
-        <el-select v-model="shopId" filterable placeholder="请选择店铺">
+        <el-select v-model="shopId" filterable placeholder="请选择店铺" @change="selectOne">
 
           <el-option
             v-for="item in options"
