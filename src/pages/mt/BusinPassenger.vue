@@ -524,7 +524,7 @@ export default {
       option.series = [
         {
           name: '曝光人数',
-          type: 'bar',
+          type: 'line',
           tiled: '曝光人数',
           areaStyle: {normal: {}},
           data: exposurenum
@@ -541,7 +541,7 @@ export default {
       option1.series = [
         {
           name: '入店人数',
-          type: 'bar',
+          type: 'line',
           tiled: '入店人数',
           areaStyle: {normal: {}},
           data: visitnum
@@ -558,7 +558,7 @@ export default {
       option2.series = [
         {
           name: '下单人数',
-          type: 'bar',
+          type: 'line',
           tiled: '下单人数',
           areaStyle: {normal: {}},
           data: ordernum
@@ -575,7 +575,7 @@ export default {
       option3.series = [
         {
           name: '入店转化率',
-          type: 'bar',
+          type: 'line',
           tiled: '入店转化率',
           areaStyle: {normal: {}},
           data: visitratetop
@@ -593,7 +593,7 @@ export default {
       option4.series = [
         {
           name: '下单转化率',
-          type: 'bar',
+          type: 'line',
           tiled: '下单转化率',
           areaStyle: {normal: {}},
           data: orderratetop

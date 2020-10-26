@@ -369,7 +369,7 @@ export default {
       option.series = [
         {
           name: '营业额',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: turnovers
@@ -386,7 +386,7 @@ export default {
       option1.series = [
         {
           name: '收入',
-          type: 'bar',
+          type: 'line',
           tiled: '收入',
           areaStyle: {normal: {}},
           data: settleacc
@@ -403,7 +403,7 @@ export default {
       option2.series = [
         {
           name: '订单',
-          type: 'bar',
+          type: 'line',
           tiled: '订单',
           areaStyle: {normal: {}},
           data: effectiveorders

@@ -666,7 +666,7 @@ export default {
       option.series = [
         {
           name: '成本',
-          type: 'bar',
+          type: 'line',
           tiled: '成本',
           areaStyle: {normal: {}},
           data: price
@@ -683,7 +683,7 @@ export default {
       option1.series = [
         {
           name: '推广费',
-          type: 'bar',
+          type: 'line',
           tiled: '推广费',
           areaStyle: {normal: {}},
           data: consume
@@ -700,7 +700,7 @@ export default {
       option2.series = [
         {
           name: '有效订单',
-          type: 'bar',
+          type: 'line',
           tiled: '有效订单',
           areaStyle: {normal: {}},
           data: orders
@@ -717,7 +717,7 @@ export default {
       option3.series = [
         {
           name: '收入',
-          type: 'bar',
+          type: 'line',
           tiled: '收入',
           areaStyle: {normal: {}},
           data: settlea
@@ -735,7 +735,7 @@ export default {
       option4.series = [
         {
           name: '比率',
-          type: 'bar',
+          type: 'line',
           tiled: '比率',
           areaStyle: {normal: {}},
           data: promotionRate
@@ -752,7 +752,7 @@ export default {
       option5.series = [
         {
           name: '成本比例',
-          type: 'bar',
+          type: 'line',
           tiled: '成本比例',
           areaStyle: {normal: {}},
           data: costRatio
@@ -769,7 +769,7 @@ export default {
       option6.series = [
         {
           name: '单价',
-          type: 'bar',
+          type: 'line',
           tiled: '单价',
           areaStyle: {normal: {}},
           data: unitPrice

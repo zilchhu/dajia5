@@ -500,12 +500,12 @@ export default {
         newsingle.push(value['newsingle'])
         oldsingle.push(value['oldsingle'])
         newpercent.push(value['newpercent'])
-        oldpercent.push(value['oldpercent'])
+        oldpercent.push((value['oldpercent']>0?value['oldpercent']:0))
         allavg.push(value['allavg'])
       })
 
 
-      option1.xAxis = [
+      option.xAxis = [
         {
           type: 'category',
           boundaryGap: true,
@@ -516,7 +516,7 @@ export default {
       option.series = [
         {
           name: '下单总人数',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: allsingle
@@ -533,7 +533,7 @@ export default {
       option1.series = [
         {
           name: '老客占比',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: oldpercent
@@ -550,7 +550,7 @@ export default {
       option2.series = [
         {
           name: '商圈下单人数排名',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: allavg
@@ -566,7 +566,7 @@ export default {
       option3.series = [
         {
           name: '新客人数',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: newsingle
@@ -583,7 +583,7 @@ export default {
       option4.series = [
         {
           name: '老客人数',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: oldsingle

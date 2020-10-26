@@ -7,8 +7,8 @@
         <el-form-item label="时间">
           <div class="block">
             <el-date-picker
-                @change="dateChange"
-                v-model="date"
+              @change="dateChange"
+              v-model="date"
               type="daterange"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
@@ -43,9 +43,9 @@
       <el-table
         :data="tableData"
         border
-        max-height="550"
+        max-height="540"
         style="width: 100%"
-        >
+      >
         <el-table-column
           fixed
           prop="name"
@@ -54,11 +54,11 @@
         >
         </el-table-column>
 
-        <el-table-column v-for="(item) in colunmName" :key="item" :label="item" :prop="item" sortable
-                         align="center" width="120">
+        <el-table-column v-for="(item) in colunmName" :key="item" :label="item.substring(4)" :prop="item" sortable
+                         align="center" width="60">
           <!-- 数据的遍历  scope.row就代表数据的每一个对象-->
           <template slot-scope="scope">
-            <span>{{scope.row[item]}}</span>
+            <span>{{ scope.row[item] }}</span>
           </template>
         </el-table-column>
 
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       tableData: [],
-      colunmName:[],
+      colunmName: [],
       date: '',
       options: [{
         value: -1,
@@ -102,12 +102,12 @@ export default {
     }
   },
   methods: {
-    dateChange(){
+    dateChange() {
       console.log('修改时间');
       window.sessionStorage.setItem("changedate", this.date);
       this.onSubmit()
     },
-    selectOne(item){
+    selectOne(item) {
       window.sessionStorage.setItem("shop_info", item);
       this.onSubmit()
     },
@@ -130,9 +130,20 @@ export default {
             let resData = res.data.data;
             if (res.data.code === 0) {
               this.$message('操作成功');
-              let dateList =  resData['dateList']
+              let dateList = resData['dateList']
               let ListMap = resData['ListMap']
-              this.colunmName = dateList
+              let li = []
+/*              dateList.forEach(function (va) {
+                let temp  = String(va)
+                li.push(temp.substring(4))
+              })*/
+              this.colunmName = dateList.sort(function (a, b) { //callback
+                if (a < b) { // a b 分别是Arr中的 56 21
+                  return 1  //返回正数 ，b排列在a之前
+                } else {
+                  return -1 //返回负数 ，a排列在b之前
+                }
+              })
               this.tableData = ListMap
             } else {
               this.$message('数据为空')
@@ -144,7 +155,7 @@ export default {
     },
     getAllShop() {
       let shop_all = window.sessionStorage.getItem("user-all-info")
-      if (shop_all){
+      if (shop_all) {
         this.options = JSON.parse(shop_all)
         return
       }
@@ -176,21 +187,21 @@ export default {
     formatDates(row, column) {
       // 获取单元格数据
       let data = row[column.property]
-      if(data == null) {
+      if (data == null) {
         return null
       }
       let dt = new Date(data)
       return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate()
     },
-    formatdiscount(){
+    formatdiscount() {
       // 获取单元格数据
       let data = row[column.property]
-      if(data == null) {
+      if (data == null) {
         return null
       }
-      if (data=== "2"){
+      if (data === "2") {
         return "是"
-      }else {
+      } else {
         return "否"
       }
     }
@@ -203,12 +214,12 @@ export default {
 
     this.shopId = -1
     console.log(shop_info)
-    if (shop_info){
+    if (shop_info) {
       this.shopId = shop_info
     }
-    if (changedate){
+    if (changedate) {
       this.date = changedate.split(",")
-    }else {
+    } else {
       let dt = new Date();
       let endDate = dateFormat("YYYYmmdd", dt)
       dt.setDate(dt.getDate() - 30)

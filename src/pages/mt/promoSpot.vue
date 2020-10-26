@@ -54,6 +54,9 @@
       <el-col :span="8">
         <div id="gotobedbar3"></div>
       </el-col>
+      <el-col :span="8">
+        <div id="gotobedbar4"></div>
+      </el-col>
     </el-row>
 
 
@@ -354,6 +357,74 @@ const option3 = {
   ],
   series: []
 }
+const option4 = {
+  color: ['#70d1d5'],
+  title: {
+    text: '总消费',
+    left: 'center',
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ['总消费'],
+    orient: 'vertical',
+    left: 'right',
+    top: 'middle',//如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
+    x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
+                               // 'center' ¦ 'left' ¦ 'right'
+                               // ¦ {number}（x坐标，单位px）
+    y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+                               // 'top' ¦ 'bottom' ¦ 'center'
+                               // ¦ {number}（y坐标，单位px）
+    color: ['#1eff8f'],
+    feature: {
+      mark: {show: true},
+      // dataView: {show: true, readOnly: false},
+      magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+      restore: {show: true},
+      saveAsImage: {show: true}
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: 'slider',
+      show: true,
+      xAxisIndex: [0],
+    },
+    {
+      type: 'slider',
+      show: true,
+      yAxisIndex: [0],
+      left: '93%',
+    },
+  ],
+
+
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: []
+}
 export default {
   name: "promoSpot",
   data() {
@@ -420,13 +491,14 @@ export default {
       let cpcprice = [];
       let bjcpmshowcount = [];
       let bjcpmshowprice = [];
+      let primaryAccountCost = [];
       dateSours.forEach(function (value) {
-        // lista.push(value['date'])
-        lista =getBeforeDate(30)
+        lista.push(value['date'])
         cpcclickcount.push(value['cpcclickcount'])
         cpcprice.push(value['cpcprice'])
         bjcpmshowcount.push(value['bjcpmshowcount'])
         bjcpmshowprice.push(value['bjcpmshowprice'])
+        primaryAccountCost.push(value['primaryaccountcost'])
       })
 
       option.xAxis = [
@@ -440,7 +512,7 @@ export default {
       option.series = [
         {
           name: '点金次数',
-          type: 'bar',
+          type: 'line',
           tiled: '点金次数',
           areaStyle: {normal: {}},
           data: cpcclickcount
@@ -457,7 +529,7 @@ export default {
       option1.series = [
         {
           name: '点金花费',
-          type: 'bar',
+          type: 'line',
           tiled: '点金花费',
           areaStyle: {normal: {}},
           data: cpcprice
@@ -474,7 +546,7 @@ export default {
       option2.series = [
         {
           name: '铂金次数',
-          type: 'bar',
+          type: 'line',
           tiled: '铂金次数',
           areaStyle: {normal: {}},
           data: bjcpmshowcount
@@ -491,16 +563,33 @@ export default {
       option3.series = [
         {
           name: '铂金花费',
-          type: 'bar',
+          type: 'line',
           tiled: '铂金花费',
           areaStyle: {normal: {}},
           data: bjcpmshowprice
+        },]
+      option4.xAxis = [
+        {
+          type: 'category',
+          boundaryGap: true,
+          data: lista
+        }
+      ]
+
+      option4.series = [
+        {
+          name: '总消费',
+          type: 'line',
+          tiled: '总消费',
+          areaStyle: {normal: {}},
+          data: primaryAccountCost
         },]
 
       var Chart1 = this.drawbar(option, 'gotobedbar');
       var Chart2 = this.drawbar(option1, 'gotobedbar1');
       var Chart3 = this.drawbar(option2, 'gotobedbar2');
       var Chart4 = this.drawbar(option3, 'gotobedbar3');
+      var Chart5 = this.drawbar(option4, 'gotobedbar4');
     },
 
     getAllShop() {

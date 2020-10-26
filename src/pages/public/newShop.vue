@@ -806,7 +806,7 @@ export default {
       option.series = [
         {
           name: '评论',
-          type: 'bar',
+          type: 'line',
           tiled: '评论',
           areaStyle: {normal: {}},
           data: evaluate
@@ -823,7 +823,7 @@ export default {
       option1.series = [
         {
           name: '订单',
-          type: 'bar',
+          type: 'line',
           tiled: '订单',
           areaStyle: {normal: {}},
           data: order
@@ -840,7 +840,7 @@ export default {
       option2.series = [
         {
           name: '评分',
-          type: 'bar',
+          type: 'line',
           tiled: '评分',
           areaStyle: {normal: {}},
           data: bizscore
@@ -858,7 +858,7 @@ export default {
       option3.series = [
         {
           name: '推广消费',
-          type: 'bar',
+          type: 'line',
           tiled: '推广消费  ',
           areaStyle: {normal: {}},
           data: moment
@@ -875,7 +875,7 @@ export default {
       option4.series = [
         {
           name: '营业额',
-          type: 'bar',
+          type: 'line',
           tiled: '营业额',
           areaStyle: {normal: {}},
           data: turnover
@@ -892,7 +892,7 @@ export default {
       option5.series = [
         {
           name: '客单价',
-          type: 'bar',
+          type: 'line',
           tiled: '客单价',
           areaStyle: {normal: {}},
           data: unitprice
@@ -909,7 +909,7 @@ export default {
       option6.series = [
         {
           name: '曝光',
-          type: 'bar',
+          type: 'line',
           tiled: '曝光',
           areaStyle: {normal: {}},
           data: overview
@@ -926,7 +926,7 @@ export default {
       option7.series = [
         {
           name: '进店率',
-          type: 'bar',
+          type: 'line',
           tiled: '进店率',
           areaStyle: {normal: {}},
           data: entryrate
@@ -943,7 +943,7 @@ export default {
       option8.series = [
         {
           name: '下单率',
-          type: 'bar',
+          type: 'line',
           tiled: '下单率',
           areaStyle: {normal: {}},
           data: orderrate

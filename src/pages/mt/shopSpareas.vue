@@ -377,7 +377,7 @@ export default {
       option.series = [
         {
           name: '配送范围',
-          type: 'bar',
+          type: 'line',
           tiled: '配送范围',
           areaStyle: {normal: {}},
           data: logisticsareas
@@ -394,7 +394,7 @@ export default {
       option1.series = [
         {
           name: '起送费',
-          type: 'bar',
+          type: 'line',
           tiled: '起送费',
           areaStyle: {normal: {}},
           data: minprice
@@ -411,7 +411,7 @@ export default {
       option2.series = [
         {
           name: '配送费',
-          type: 'bar',
+          type: 'line',
           tiled: '配送费',
           areaStyle: {normal: {}},
           data: shippingfee

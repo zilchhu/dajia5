@@ -345,7 +345,7 @@ export default {
       option.series = [
         {
           name: '回复率',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: lists
@@ -374,7 +374,7 @@ export default {
       option1.series = [
         {
           name: '评分',
-          type: 'bar',
+          type: 'line',
           tiled: '总量',
           areaStyle: {normal: {}},
           data: lists
