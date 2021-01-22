@@ -40,28 +40,30 @@
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="8">
-        <div id="gotobedbar4"></div>
+      <el-col :span="16">
+        <div id="gotobedbar"></div>
       </el-col>
 
       <el-col :span="8">
-        <div id="gotobedbar1"></div>
+        <div id="gotobedbar6"></div>
       </el-col>
 
+      <el-col :span="8">
+        <div id="gotobedbar2"></div>
+      </el-col>
       <el-col :span="8">
         <div id="gotobedbar3"></div>
       </el-col>
       <el-col :span="8">
-        <div class="gotobedbar"></div>
+        <div id="gotobedbar4"></div>
       </el-col>
-      <el-col :span="8"> </el-col>
+      <el-col :span="8">
+        <div id="gotobedbar5"></div>
+      </el-col>
 
-      <el-col :span="8">
-        <div id="gotobedbar"></div>
-      </el-col>
-      <el-col :span="8">
-        <div id="gotobedbar2"></div>
-      </el-col>
+      <!-- <el-col :span="8">
+        
+      </el-col> -->
     </el-row>
   </div>
 </template>
@@ -71,7 +73,7 @@ import * as api from "../../api";
 import { dateFormat } from "../../common/utils";
 import echarts from "echarts";
 
-const getBeforeDate = (n) => {
+const getBeforeDate = n => {
   var list = [];
   var d = new Date(); // 这个算法能自动处理闰年和非闰年。2012年是闰年，所以2月有29号
   var s = "";
@@ -94,25 +96,25 @@ const getBeforeDate = (n) => {
 };
 
 const option = {
-  color: ["#70d1d5"],
+  color: ["orange", "skyblue", 'purple'],
   title: {
-    text: "点金次数",
-    left: "center",
+    text: "进店下单曝光",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
-    data: ["点金次数"],
+    data: ["进店", "下单", "曝光"],
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -129,58 +131,62 @@ const option = {
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: getBeforeDate(30),
-    },
+      data: getBeforeDate(30)
+    }
   ],
   yAxis: [
     {
-      type: "value",
+      type: "value"
     },
+    {
+      type: "value",
+      name: "下单"
+    }
   ],
-  series: [],
+  series: []
 };
 const option1 = {
-  color: ["#70d1d5"],
+  color: ["#22bb22", "#4b0082", "#d2691e"],
   title: {
-    text: "点金花费",
-    left: "center",
+    text: "进店顾客",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
-    data: ["点金花费"],
+    data: ["进店顾客"],
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -191,64 +197,64 @@ const option1 = {
     y: "top", // 垂直安放位置，默认为全图顶端，可选为：
     // 'top' ¦ 'bottom' ¦ 'center'
     // ¦ {number}（y坐标，单位px）
-    color: ["#70d1d5"],
+    color: ["#1efff4"],
     feature: {
       mark: { show: true },
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: getBeforeDate(30),
-    },
+      data: getBeforeDate(30)
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
 const option2 = {
-  color: ["#70d1d5"],
+  color: ["#d2691e"],
   title: {
-    text: "铂金次数",
-    left: "center",
+    text: "下单顾客",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
-    data: ["铂金次数"],
+    data: ["下单顾客"],
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -259,64 +265,64 @@ const option2 = {
     y: "top", // 垂直安放位置，默认为全图顶端，可选为：
     // 'top' ¦ 'bottom' ¦ 'center'
     // ¦ {number}（y坐标，单位px）
-    color: ["#70d1d5"],
+    color: ["#1eff8f"],
     feature: {
       mark: { show: true },
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: getBeforeDate(30),
-    },
+      data: getBeforeDate(30)
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
 const option3 = {
-  color: ["#70d1d5"],
+  color: ["#1e90ff", "#22bb22", "#4b0082", "#d2691e"],
   title: {
-    text: "铂金花费",
-    left: "center",
+    text: "进店转化率",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
-    data: ["铂金花费"],
+    data: ["进店转化率"],
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -327,64 +333,132 @@ const option3 = {
     y: "top", // 垂直安放位置，默认为全图顶端，可选为：
     // 'top' ¦ 'bottom' ¦ 'center'
     // ¦ {number}（y坐标，单位px）
-    color: ["#1eff8f"],
+    color: ["#1e1eff"],
     feature: {
       mark: { show: true },
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: getBeforeDate(30),
-    },
+      data: getBeforeDate(30)
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
 const option4 = {
-  color: ["#70d1d5"],
+  color: ["#22bb22", "#4b0082", "#d2691e"],
   title: {
-    text: "总消费",
-    left: "center",
+    text: "下单转化率",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
-    data: ["总消费"],
+    data: ["下单转化率"],
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: "horizontal", // 布局方式，默认为水平布局，可选为：
+    x: "right", // 水平安放位置，默认为全图右对齐，可选为：
+    // 'center' ¦ 'left' ¦ 'right'
+    // ¦ {number}（x坐标，单位px）
+    y: "top", // 垂直安放位置，默认为全图顶端，可选为：
+    // 'top' ¦ 'bottom' ¦ 'center'
+    // ¦ {number}（y坐标，单位px）
+    color: ["#1efff4"],
+    feature: {
+      mark: { show: true },
+      // dataView: {show: true, readOnly: false},
+      magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: "slider",
+      show: true,
+      xAxisIndex: [0]
+    },
+    {
+      type: "slider",
+      show: true,
+      yAxisIndex: [0],
+      left: "93%"
+    }
+  ],
+
+  xAxis: [
+    {
+      type: "category",
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: "value"
+    }
+  ],
+  series: []
+};
+const option5 = {
+  color: ["#d2691e"],
+  title: {
+    text: "复购率",
+    left: "center"
+  },
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      // 坐标轴指示器，坐标轴触发有效
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ["复购率"],
+    orient: "vertical",
+    left: "right",
+    top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -401,45 +475,115 @@ const option4 = {
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: getBeforeDate(30),
-    },
+      data: getBeforeDate(30)
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
+const option6 = {
+  color: ["#1e90ff", "#22bb22", "#4b0082", "#d2691e"],
+  title: {
+    text: "新客占比",
+    left: "center"
+  },
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      // 坐标轴指示器，坐标轴触发有效
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
+  },
+
+  legend: {
+    data: ["新客占比"],
+    orient: "vertical",
+    left: "right",
+    top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
+    itemGap: 20
+  },
+  toolbox: {
+    show: true,
+    orient: "horizontal", // 布局方式，默认为水平布局，可选为：
+    x: "right", // 水平安放位置，默认为全图右对齐，可选为：
+    // 'center' ¦ 'left' ¦ 'right'
+    // ¦ {number}（x坐标，单位px）
+    y: "top", // 垂直安放位置，默认为全图顶端，可选为：
+    // 'top' ¦ 'bottom' ¦ 'center'
+    // ¦ {number}（y坐标，单位px）
+    color: ["#1e1eff"],
+    feature: {
+      mark: { show: true },
+      // dataView: {show: true, readOnly: false},
+      magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  calculable: true,
+  dataZoom: [
+    {
+      type: "slider",
+      show: true,
+      xAxisIndex: [0]
+    },
+    {
+      type: "slider",
+      show: true,
+      yAxisIndex: [0],
+      left: "93%"
+    }
+  ],
+
+  xAxis: [
+    {
+      type: "category",
+      boundaryGap: true,
+      data: getBeforeDate(30)
+    }
+  ],
+  yAxis: [
+    {
+      type: "value"
+    }
+  ],
+  series: []
+};
+
 export default {
-  name: "promoSpot",
+  name: "exposures",
   data() {
     return {
       date: "",
       shopId: "",
       options: [],
+      or: [0]
     };
   },
   methods: {
@@ -449,7 +593,7 @@ export default {
       this.onSubmit();
     },
     selectOne(item) {
-      window.sessionStorage.setItem("shop_info", item);
+      window.sessionStorage.setItem("ele_shop_info", item);
       this.onSubmit();
     },
     drawbar(option, id) {
@@ -464,11 +608,12 @@ export default {
     onSubmit() {
       console.log("date" + this.date);
       console.log("shopId" + this.shopId);
+      //this.date = window.sessionStorage.getItem('changedate')
       if (this.date.length === 0 || this.shopId === "") {
         this.$message({
           showClose: true,
           message: "请检查输入条件",
-          type: "warning",
+          type: "warning"
         });
         return;
       }
@@ -478,10 +623,12 @@ export default {
         "&endTime=" +
         this.date[1] +
         "&shopId=" +
-        this.shopId;
+        this.shopId +
+        "&type" +
+        1;
       this.$http
-        .get(api.MT_PROMOSPOT + "?" + times)
-        .then((res) => {
+        .get(api.ELE_BUS_DATE + "?" + times)
+        .then(res => {
           console.log(res);
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
@@ -494,132 +641,196 @@ export default {
             }
           }
         })
-        .catch((e) => {
+        .catch(e => {
           // this.$message('数据异常请联系管理员')
         });
     },
 
     updateBase(dateSours) {
       let lista = [];
-      let cpcclickcount = [];
-      let cpcprice = [];
-      let bjcpmshowcount = [];
-      let bjcpmshowprice = [];
-      let primaryAccountCost = [];
-      dateSours.forEach(function (value) {
-        lista.push(value["date"]);
-        cpcclickcount.push(value["cpcclickcount"]);
-        cpcprice.push(value["cpcprice"]);
-        bjcpmshowcount.push(value["bjcpmshowcount"]);
-        bjcpmshowprice.push(value["bjcpmshowprice"]);
-        primaryAccountCost.push(value["primaryaccountcost"]);
-      });
+      let exposedCustomer = []; //曝光量
+      let customersStore = []; //进店顾客
+      let conversionRate = []; //下单顾客
+      let customersOrder = []; //进店转化率
+      let orderConversionRate = []; //下单转化率
+      let newCustomerRatio = []; //复购率
+      let repurchaseRate = []; //新客占比
 
+      dateSours.forEach(function(value) {
+        lista.push(value["date"]);
+        exposedCustomer.push(value["exposedCustomer"]);
+        customersStore.push(value["customersStore"]);
+        conversionRate.push(value["conversionRate"]);
+
+        customersOrder.push(value["customersOrder"]);
+        orderConversionRate.push(value["orderConversionRate"]);
+        newCustomerRatio.push(value["newCustomerRatio"]);
+        repurchaseRate.push(value["repurchaseRate"]);
+      });
+      this.or = conversionRate;
       option.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: lista,
-        },
+          data: lista
+        }
       ];
 
       option.series = [
         {
-          name: "点金次数",
+          name: "进店顾客",
           type: "line",
-          tiled: "点金次数",
+          tiled: "进店顾客",
           areaStyle: { normal: {} },
-          data: cpcclickcount,
+          data: customersStore
         },
+        {
+          name: "下单顾客",
+          type: "line",
+          tiled: "下单顾客",
+          yAxisIndex: 1,
+          areaStyle: { normal: {} },
+          data: customersOrder
+        },
+        {
+          name: "曝光量",
+          type: "line",
+          tiled: "曝光量",
+          areaStyle: { normal: {} },
+          data: exposedCustomer
+        }
       ];
 
       option1.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: lista,
-        },
+          data: lista
+        }
       ];
 
       option1.series = [
         {
-          name: "点金花费",
+          name: "进店顾客",
           type: "line",
-          tiled: "点金花费",
+          tiled: "进店顾客",
           areaStyle: { normal: {} },
-          data: cpcprice,
-        },
+          data: customersStore
+        }
       ];
 
       option2.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: lista,
-        },
+          data: lista
+        }
       ];
 
       option2.series = [
         {
-          name: "铂金次数",
+          name: "下单顾客",
           type: "line",
-          tiled: "铂金次数",
+          tiled: "下单顾客",
           areaStyle: { normal: {} },
-          data: bjcpmshowcount,
-        },
+          data: customersOrder
+        }
       ];
 
       option3.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: lista,
-        },
+          data: lista
+        }
       ];
 
       option3.series = [
         {
-          name: "铂金花费",
+          name: "进店转化率",
           type: "line",
-          tiled: "铂金花费",
+          tiled: "进店转化率",
           areaStyle: { normal: {} },
-          data: bjcpmshowprice,
-        },
+          data: conversionRate
+        }
       ];
+
       option4.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: lista,
-        },
+          data: lista
+        }
       ];
 
       option4.series = [
         {
-          name: "总消费",
+          name: "下单转化率",
           type: "line",
-          tiled: "总消费",
+          tiled: "下单转化率",
           areaStyle: { normal: {} },
-          data: primaryAccountCost,
-        },
+          data: orderConversionRate
+        }
+      ];
+
+      option5.xAxis = [
+        {
+          type: "category",
+          boundaryGap: true,
+          data: lista
+        }
+      ];
+
+      option5.series = [
+        {
+          name: "复购率",
+          type: "line",
+          tiled: "复购率",
+          areaStyle: { normal: {} },
+          data: repurchaseRate
+        }
+      ];
+
+      option6.xAxis = [
+        {
+          type: "category",
+          boundaryGap: true,
+          data: lista
+        }
+      ];
+
+      option6.series = [
+        {
+          name: "新客占比",
+          type: "line",
+          tiled: "新客占比",
+          areaStyle: { normal: {} },
+          data: newCustomerRatio
+        }
       ];
 
       var Chart1 = this.drawbar(option, "gotobedbar");
-      var Chart2 = this.drawbar(option1, "gotobedbar1");
+      // var Chart2 = this.drawbar(option1, 'gotobedbar1');
       var Chart3 = this.drawbar(option2, "gotobedbar2");
       var Chart4 = this.drawbar(option3, "gotobedbar3");
       var Chart5 = this.drawbar(option4, "gotobedbar4");
+      var Chart6 = this.drawbar(option5, "gotobedbar5");
+      var Chart7 = this.drawbar(option6, "gotobedbar6");
+      Chart1.on("magictypechanged", function(params) {
+        console.log("Chart1  切换了");
+      });
+      // echarts.connect([Chart1, Chart2,Chart3,Chart4,Chart5,Chart6,Chart7,Chart8,Chart9,Chart10,Chart11])
     },
 
     getAllShop() {
-      let shop_all = window.sessionStorage.getItem("user-all-info");
+      let shop_all = window.sessionStorage.getItem("ele-user-all-info");
       if (shop_all) {
         this.options = JSON.parse(shop_all);
         return;
       }
       this.$http
-        .get(api.MT_ALL_SHOP)
-        .then((res) => {
+        .get(api.ELE_ALL_SHOP)
+        .then(res => {
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
 
@@ -628,16 +839,16 @@ export default {
               let op = [
                 {
                   value: -1,
-                  label: "全部",
-                },
+                  label: "全部"
+                }
               ];
-              resData.forEach(function (va) {
-                op.push({ value: va.wmpoiid, label: va.reptileType });
+              resData.forEach(function(va) {
+                op.push({ value: String(va.shopId), label: va.shopName });
               });
               this.options = op;
               console.log(op);
               window.sessionStorage.setItem(
-                "user-all-info",
+                "ele-user-all-info",
                 JSON.stringify(op)
               );
             } else {
@@ -646,12 +857,12 @@ export default {
           }
         })
         .catch();
-    },
+    }
   },
 
   mounted() {
     this.getAllShop();
-    let shop_info = window.sessionStorage.getItem("shop_info");
+    let shop_info = window.sessionStorage.getItem("ele_shop_info");
     let changedate = window.sessionStorage.getItem("changedate");
 
     this.shopId = -1;
@@ -670,18 +881,20 @@ export default {
       this.date = [statrDate, endDate];
       window.sessionStorage.setItem("changedate", this.date);
     }
-    this.$nextTick(function () {
+
+    this.$nextTick(function() {
+      // this.drawbar('gotobedbar');
       var that = this;
       var resizeTimer = null;
-      window.onresize = function () {
+      window.onresize = function() {
         if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
+        resizeTimer = setTimeout(function() {
           that.drawbar("gotobedbar");
         }, 300);
       };
     });
     this.onSubmit();
-  },
+  }
 };
 </script>
 
@@ -692,9 +905,7 @@ export default {
   height: 300px !important;
 }
 
-.gotobedbar {
-  min-height: 300px;
-  margin-right: 15px;
-  height: 300px !important;
+#gotobedbar {
+  height: 500px !important;
 }
 </style>

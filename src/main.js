@@ -9,6 +9,7 @@ import VueProgressBar from "vue-progressbar";
 import Element from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
 import ImpPanel from "./components/panel.vue";
+import draggable from 'vuedraggable'
 
 Vue.prototype.$http = axios
 Vue.axios = axios
@@ -18,6 +19,7 @@ Vue.use(axios);
 Vue.use(Element);
 
 Vue.component(ImpPanel.name, ImpPanel);
+Vue.component('draggable', draggable)
 
 Vue.use(VueProgressBar, {
   color: '#eeeeee',

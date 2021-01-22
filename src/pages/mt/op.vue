@@ -33,42 +33,55 @@
             </el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询全部</el-button>
-          <el-button type="primary" @click="filterTable('满减')"
-            >满减</el-button
-          >
-          <el-button type="primary" @click="filterTable('下单返券')"
-            >下单返券</el-button
-          >
-          <el-button type="primary" @click="filterTable('收藏有礼')"
-            >收藏有礼</el-button
-          >
-          <el-button type="primary" @click="filterTable('进店领券')"
-            >进店领券</el-button
-          >
-          <el-button type="primary" @click="jpTable('减配')">减配</el-button>
-          <el-button type="primary" @click="filterTable('新客立减')"
-            >新客立减</el-button
-          >
-        </el-form-item>
       </el-form>
     </el-col>
 
     <el-col :span="24">
-      <el-table :data="tableData" border style="width: 100%" stripe  :default-sort = "{prop: 'insertDate', order: 'descending'}">
+      <el-table
+        :data="tableData2"
+        border
+        style="width: 100%"
+        stripe
+        :default-sort="{ prop: 'date', order: 'descending' }"
+      >
         <el-table-column type="index" width="50"> </el-table-column>
-        <!-- <el-table-column prop="id" label="ID" width="100"> </el-table-column> -->
-        <el-table-column prop="wmpoiid" label="店铺id" width="100">
+        <el-table-column prop="platform" label="平台" > </el-table-column>
+        <el-table-column prop="realShop" label="物理店"> </el-table-column>
+        <el-table-column
+          prop="sumSettlea"
+          label="物理店营业额"
+        ></el-table-column>
+        <el-table-column prop="sumConsume" label="物理店营推广费">
         </el-table-column>
-        <el-table-column prop="actType" label="活动名称" width="100">
+        <el-table-column prop="sumConsumePercent" label="物理店推广费比例">
         </el-table-column>
-        <el-table-column prop="policy" label="活动描述"> </el-table-column>
-
-        <el-table-column prop="poiCharge" label="商家承担" > </el-table-column>
-        <el-table-column prop="mtCharge" label="平台承担" > </el-table-column>
-        <el-table-column prop="insertDate" label="查询时间" width="100" sortable> </el-table-column>
+        <el-table-column prop="consume" type="number" label="推广费"> </el-table-column>
+        <el-table-column prop="consumePercent" label="推广费比例">
+        </el-table-column>
+        <el-table-column prop="price" label="成本"> </el-table-column>
+        <el-table-column prop="pricePercent" label="成本比例">
+        </el-table-column>
+        <el-table-column prop="settlea" label="收入"> </el-table-column>
+        <el-table-column prop="settlea1" label="当日收入与30日平均收入比值">
+        </el-table-column>
+        <el-table-column prop="settlea2" label="当日收入比昨日环比增长">
+        </el-table-column>
+        <el-table-column prop="settlea3" label="当日收入比上周环比增长（当日）">
+        </el-table-column>
+        <el-table-column prop="settlea4" label="当日收入比上周环比增长（三日）">
+        </el-table-column>
+        <el-table-column prop="unitPrice" label="单价"> </el-table-column>
+        <el-table-column prop="orders" label="有效订单"> </el-table-column>
+        <el-table-column prop="date" label="查询时间" width="100" sortable>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small"
+              >查看</el-button
+            >
+            <el-button type="text" size="small">编辑</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-col>
 
@@ -87,7 +100,7 @@ import * as api from "../../api";
 import { dateFormat } from "../../common/utils";
 import echarts from "echarts";
 
-const getBeforeDate = (n) => {
+const getBeforeDate = n => {
   var list = [];
   var d = new Date(); // 这个算法能自动处理闰年和非闰年。2012年是闰年，所以2月有29号
   var s = "";
@@ -113,14 +126,14 @@ const option = {
   color: ["#1e90ff", "#22bb22", "#4b0082", "#d2691e"],
   title: {
     text: "减配",
-    left: "center",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
@@ -128,7 +141,7 @@ const option = {
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -144,50 +157,50 @@ const option = {
       mark: { show: true },
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: [],
-    },
+      data: []
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
 const option1 = {
   color: ["#22bb22", "#4b0082", "#d2691e"],
   title: {
     text: "新客立减",
-    left: "center",
+    left: "center"
   },
   tooltip: {
     trigger: "axis",
     axisPointer: {
       // 坐标轴指示器，坐标轴触发有效
-      type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-    },
+      type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 
   legend: {
@@ -195,7 +208,7 @@ const option1 = {
     orient: "vertical",
     left: "right",
     top: "middle", //如果 top 的值为'top', 'middle', 'bottom'，组件会根据相应的位置自动对齐。
-    itemGap: 20,
+    itemGap: 20
   },
   toolbox: {
     show: true,
@@ -212,37 +225,37 @@ const option1 = {
       // dataView: {show: true, readOnly: false},
       magicType: { show: true, type: ["line", "bar", "stack", "tiled"] },
       restore: { show: true },
-      saveAsImage: { show: true },
-    },
+      saveAsImage: { show: true }
+    }
   },
   calculable: true,
   dataZoom: [
     {
       type: "slider",
       show: true,
-      xAxisIndex: [0],
+      xAxisIndex: [0]
     },
     {
       type: "slider",
       show: true,
       yAxisIndex: [0],
-      left: "93%",
-    },
+      left: "93%"
+    }
   ],
 
   xAxis: [
     {
       type: "category",
       boundaryGap: true,
-      data: [],
-    },
+      data: []
+    }
   ],
   yAxis: [
     {
-      type: "value",
-    },
+      type: "value"
+    }
   ],
-  series: [],
+  series: []
 };
 
 export default {
@@ -250,43 +263,39 @@ export default {
   data() {
     return {
       tableData: [],
-      graphData: [],
+      tableData2: [],
+      tableData3: [],
       originData: [],
       jpData: [],
       date: "",
       options: [
         {
           value: -1,
-          label: "全部",
+          label: "全部"
         },
         {
           value: 2924399,
-          label: "古御贡茶•手抓饼•小吃（大芬信和店）",
+          label: "古御贡茶•手抓饼•小吃（大芬信和店）"
         },
         {
           value: 4799060,
-          label: "古御贡茶•手抓饼•小吃（龙岗罗马公元店）",
+          label: "古御贡茶•手抓饼•小吃（龙岗罗马公元店）"
         },
         {
           value: 6119122,
-          label: "古御贡茶•手抓饼•小吃（龙岗爱联店）",
+          label: "古御贡茶•手抓饼•小吃（龙岗爱联店）"
         },
         {
           value: 6434760,
-          label: "喜三德甜品•手工芋圆（龙岗爱联店）",
+          label: "喜三德甜品•手工芋圆（龙岗爱联店）"
         },
         {
           value: 6914754,
-          label: "古御贡茶•手抓饼•小吃（横岗店）",
-        },
+          label: "古御贡茶•手抓饼•小吃（横岗店）"
+        }
       ],
-      shopId: -1,
+      shopId: -1
     };
-  },
-  computed: {
-    allData() {
-      return [...this.originData, ...this.graphData]
-    }
   },
   methods: {
     dateChange() {
@@ -303,7 +312,7 @@ export default {
         this.$message({
           showClose: true,
           message: "请检查输入条件",
-          type: "warning",
+          type: "warning"
         });
         return;
       }
@@ -316,50 +325,45 @@ export default {
         this.shopId +
         "&type=table";
       this.$http
-        .get(api.MT_ACTIVITMY + "?" + times)
-        .then((res) => {
+        .get(api.MT_OP + "?" + times)
+        .then(res => {
           console.log(res);
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
             if (resData.length > 0) {
               this.$message("操作成功");
               let dateList = [];
-              this.tableData.push(...resData)
-              this.originData = resData
+              resData = resData.map(v=>({
+                ...v,
+                settlea1: v.settlea1.toFixed(2)
+              }))
+              this.tableData2 = resData;
+              console.log("11111111");
+              console.log(this.tableData2);
             } else {
               this.$message("数据为空");
             }
           }
         })
-        .catch((e) => {});
-      let res =
-        "startTime=" +
-        this.date[0] +
-        "&endTime=" +
-        this.date[1] +
-        "&shopId=" +
-        this.shopId +
-        "&type=graphs";
+        .catch(e => {});
       this.$http
-        .get(api.MT_ACTIVITMY + "?" + res)
-        .then((res) => {
+        .get(api.MT_OP2 + "?" + times)
+        .then(res => {
           console.log(res);
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
             if (resData.length > 0) {
               this.$message("操作成功");
-              this.jpData = resData;
-              this.tableData.push(...resData)
-              this.graphData = resData
-              console.log(33333333)
-              console.log(this.originData)
-              this.updateBase(resData);
+              let dateList = [];
+              this.tableData3 = resData;
+              console.log("2222222");
+              console.log(this.tableData3);
             } else {
               this.$message("数据为空");
             }
           }
         })
-        .catch((e) => {});
+        .catch(e => {});
     },
     getAllShop() {
       let shop_all = window.sessionStorage.getItem("user-all-info");
@@ -369,7 +373,7 @@ export default {
       }
       this.$http
         .get(api.MT_ALL_SHOP)
-        .then((res) => {
+        .then(res => {
           if (res.status === 200 && res.data.code === 0) {
             let resData = res.data.data;
 
@@ -378,10 +382,10 @@ export default {
               let op = [
                 {
                   value: -1,
-                  label: "全部",
-                },
+                  label: "全部"
+                }
               ];
-              resData.forEach(function (va) {
+              resData.forEach(function(va) {
                 op.push({ value: va.wmpoiid, label: va.reptileType });
               });
               this.options = op;
@@ -400,34 +404,40 @@ export default {
 
     filterTable(type) {
       if (type == "满减") {
-        let mjData = this.originData.filter((v) => v.actType == type);
-        let mjDataDates = new Set(mjData.map((v) => v.insertDate));
+        let mjData = this.originData.filter(v => v.actType == type);
+        let mjDataDates = new Set(mjData.map(v => v.insertDate));
         let mjDataByDate = [];
         for (let date of mjDataDates) {
           mjDataByDate.push({
             date,
-            data: mjData.filter((v) => v.insertDate == date),
+            data: mjData.filter(v => v.insertDate == date)
           });
         }
         let d = [];
         for (let dd of mjDataByDate) {
           d.push({
-            id: dd.data.map((v) => v.id).join(","),
+            id: dd.data.map(v => v.id).join(","),
             wmpoiid: this.shopId,
             actType: "满减",
-            policy: dd.data.map((v) => v.policy).join(", "),
-            poiCharge: dd.data.map((v) => v.poiCharge).join(", "),
-            mtCharge: dd.data.map((v) => v.mtCharge).join(", "),
-            insertDate: dd.date,
+            policy: dd.data.map(v => v.policy).join(", "),
+            poiCharge: dd.data.map(v => v.poiCharge).join(", "),
+            mtCharge: dd.data.map(v => v.mtCharge).join(", "),
+            insertDate: dd.date
           });
         }
         this.tableData = d;
       } else {
-        this.tableData = this.allData.filter((v) => v.actType == type);
+        this.tableData = this.originData.filter(v => v.actType == type);
       }
     },
     jpTable(type) {
-      this.tableData = this.jpData.filter((v) => v.actType == type);
+      this.tableData = this.jpData.filter(v => v.actType == type);
+    },
+    handleClick(row) {
+      console.log(row);
+    },
+    f(row, col, cell) {
+      return cell.toFixed(2)
     },
     updateBase(dateSours) {
       let jppoiCharge = [];
@@ -436,7 +446,7 @@ export default {
       let xkpoiCharge = [];
       let xkmtCharge = [];
       let xkmtdate = [];
-      dateSours.forEach(function (vr) {
+      dateSours.forEach(function(vr) {
         if (vr["actType"] === "减配") {
           jppoiCharge.push(vr["poiCharge"]);
           jpmtCharge.push(vr["mtCharge"]);
@@ -453,8 +463,8 @@ export default {
         {
           type: "category",
           boundaryGap: true,
-          data: jpmtdate,
-        },
+          data: jpmtdate
+        }
       ];
 
       option.series = [
@@ -463,23 +473,23 @@ export default {
           type: "line",
           tiled: "商家承担",
           areaStyle: { normal: {} },
-          data: jppoiCharge,
+          data: jppoiCharge
         },
         {
           name: "美团承担",
           type: "line",
           tiled: "美团承担",
           areaStyle: { normal: {} },
-          data: jpmtCharge,
-        },
+          data: jpmtCharge
+        }
       ];
 
       option1.xAxis = [
         {
           type: "category",
           boundaryGap: true,
-          data: xkmtdate,
-        },
+          data: xkmtdate
+        }
       ];
 
       option1.series = [
@@ -488,15 +498,15 @@ export default {
           type: "line",
           tiled: "商家承担",
           areaStyle: { normal: {} },
-          data: xkpoiCharge,
+          data: xkpoiCharge
         },
         {
           name: "美团承担",
           type: "line",
           tiled: "美团承担",
           areaStyle: { normal: {} },
-          data: xkmtCharge,
-        },
+          data: xkmtCharge
+        }
       ];
 
       this.drawbar("gotobedbar", option);
@@ -532,7 +542,7 @@ export default {
       } else {
         return "否";
       }
-    },
+    }
   },
   mounted() {
     this.getAllShop();
@@ -556,27 +566,27 @@ export default {
       window.sessionStorage.setItem("changedate", this.date);
     }
 
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       this.drawbar("gotobedbar");
       var that = this;
       var resizeTimer = null;
-      window.onresize = function () {
+      window.onresize = function() {
         if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
+        resizeTimer = setTimeout(function() {
           that.drawbar("gotobedbar");
         }, 300);
       };
     });
     this.onSubmit();
-  },
+  }
 };
 </script>
 
 <style scoped>
-[id*=gotobedbar] {
-min-height: 300px;
-margin-right: 15px;
-height: 300px !important;
+[id*="gotobedbar"] {
+  min-height: 300px;
+  margin-right: 15px;
+  height: 300px !important;
 }
 
 .el-table__row {

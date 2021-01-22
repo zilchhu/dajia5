@@ -30,10 +30,24 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://127.0.0.1:8082', // 要代理的域名
+        target: 'http://192.168.3.23:8082', // 要代理的域名
         changeOrigin: true,//允许跨域
         pathRewrite: {
           '^/api': '' // 这个是定义要访问的路径，名字随便写
+        }
+      },
+      '/api2': {
+        target: 'http://192.168.3.3:9002', // 要代理的域名
+        changeOrigin: true,//允许跨域
+        pathRewrite: {
+          '^/api2': '' // 这个是定义要访问的路径，名字随便写
+        }
+      },
+      '/api3': {
+        target: 'http://192.168.3.3:9020', // 要代理的域名
+        changeOrigin: true,//允许跨域
+        pathRewrite: {
+          '^/api3': '' // 这个是定义要访问的路径，名字随便写
         }
       }
     },

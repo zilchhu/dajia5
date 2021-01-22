@@ -1,5 +1,7 @@
 // export const CONTEXT = './api';
 export const CONTEXT = './api';
+export const CONTEXT2 = './api2';
+export const CONTEXT3 = './api3'
 
 export const LOGIN = CONTEXT + '/login';
 export const LOGOUT = CONTEXT + '/logout';
@@ -42,6 +44,7 @@ export const SYS_SET_USER_ROLE = CONTEXT + '/sys/user/setRoles';
 export const MSG_TOP_TEN = CONTEXT + '/messageList';
 export const TEST_DATA = CONTEXT + '/static/data/data.json';
 
+//美图数据 -------------------------------------------------------------------------------------
 // 美图评分
 export const MT_SCORE_DATE = CONTEXT + '/app/mt/userComment/scoreDate';
 //美团所有店铺
@@ -76,14 +79,40 @@ export const MT_CATEGORY = CONTEXT + '/app/mt/Shop/Category'
 export const MT_FOODAMOUNT = CONTEXT + '/app/mt/foodAmount/info'
 
 // 门店活动
-export const MT_ACTIVITMY = CONTEXT + '/app/mt/Market/activitMy'
+export const MT_ACTIVITMY = CONTEXT + '/app/mt/foxxActivityInfo/DataInfo'
 
 // 门店回复率
 export const MT_REPLYRATE = CONTEXT + '/app/mt/ShopBase/Info'
 
 
+// 评价率
+export const MT_EVRATE = CONTEXT + '/app/mt/userComment/evaluationRate'
+// 差评率
+export const MT_BADEVRATE = CONTEXT + '/app/mt/userComment/badCommentsRate'
+// 门店销售信息
+export const MT_SALE = CONTEXT + '/app/mt/fooxMtSalesInformation/DataInfo'
+
 // 盈推表
 export const MT_OPERATING = CONTEXT + '/app/mtelm/operating/data'
 // 门店曝光
 export const MT_BUSINPASSENGER = CONTEXT + '/app/mt/BusinPassenger/Flow'
+
+// 饿了么数据 -------------------------------------------------------------------------------------
+
+//饿了么全部门店
+export const ELE_ALL_SHOP = CONTEXT + '/app/ele/allShopInfo/shopInfo';
+//饿了么经营数据
+export const ELE_BUS_DATE  = CONTEXT + '/app/ele/allShop/DataInfo';
+//饿了么流量数据
+export const ELE_FLOW_DATE  = CONTEXT + '/app/ele/FlowDistribution/DataInfo';
+
+// 营推信息
+export const MT_OP = CONTEXT + '/app/mt/vMtOperating/DataInfo'
+// 操作记录
+export const MT_OP2 = CONTEXT + '/app/mt/foxxOperationalRecords/DataInfo'
+
+
+export const YT = CONTEXT2 + '/yt'
+
+export const getAllTableInfos = CONTEXT3 + '/allTableInfos'
 

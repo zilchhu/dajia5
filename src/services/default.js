@@ -49,8 +49,32 @@ export default {
       "isShow": "1"
     },
     {
+      "id": 2, "parentId": null, "sort": 0, "name": "自定义", "href": "/ele/custom", "icon": "fa fa-dashboard", "children": [],
+      "isShow": "1"
+    },
+    {
       "id": 31, "parentId": null, "sort": 1, "name": "美团", "href": "/mt", "icon": "fa fa-upload", "children":
         [
+          {
+            "id": 922,
+            "parentId": 92,
+            "sort": 0,
+            "name": "营推数据",
+            "href": '/mt/operating',
+            "icon": "fa fa-area-chart",
+            "children": [],
+            "isShow": "1"
+          },
+          {
+            "id": 9222,
+            "parentId": 92,
+            "sort": 0,
+            "name": "营推数据",
+            "href": '/mt/op',
+            "icon": "fa fa-area-chart",
+            "children": [],
+            "isShow": "1"
+          },
           {
             "id": 914,
             "parentId": 92,
@@ -163,16 +187,7 @@ export default {
           "children": [],
           "isShow": "1"
         }
-          ,{
-          "id": 922,
-          "parentId": 92,
-          "sort": 0,
-          "name": "营推数据",
-          "href": '/mt/operating',
-          "icon": "fa fa-area-chart",
-          "children": [],
-          "isShow": "1"
-        },
+      
         ]
       , "isShow": "1"
     },
@@ -184,8 +199,38 @@ export default {
             "id": 95,
             "parentId": 32,
             "sort": 0,
-            "name": "活动数据",
-            "href": "/ele/activi/1",
+            "name": "店铺营业",
+            "href": "/ele/BusinessInfo",
+            "icon": "fa fa-area-chart",
+            "isShow": "1"
+          },
+          {
+            "id": 96,
+            "parentId": 32,
+            "sort": 0,
+            "name": "曝光分析",
+            "href": "/ele/exposures",
+            "icon": "fa fa-area-chart",
+            "children": [],
+            "isShow": "1"
+          },
+          {
+            "id": 97,
+            "parentId": 32,
+            "sort": 0,
+            "name": "流量分布",
+            "href": "/ele/FlowDistribution",
+            "icon": "fa fa-area-chart",
+            "children": [],
+            "isShow": "1"
+          }
+          ,
+          {
+            "id": 98,
+            "parentId": 32,
+            "sort": 0,
+            "name": "线下指标",
+            "href": "/ele/ShopIndicator",
             "icon": "fa fa-area-chart",
             "children": [],
             "isShow": "1"
