@@ -5,6 +5,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 // const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 
 // add hot-reload related code to entry chunks
@@ -40,9 +41,9 @@ module.exports = merge(baseWebpackConfig, {
       inject: true
     }),
     new FriendlyErrorsPlugin(),
-    // new MonacoWebpackPlugin({
-    //   // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-    //   languages: ['javascript']
-    // })
+    new MonacoWebpackPlugin({
+      // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+      languages: ['javascript']
+    })
   ]
 })

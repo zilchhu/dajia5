@@ -171,7 +171,7 @@ const option = {
 };
 
 const option2 = {
-  color: ["#70d1d5", "#70c1ff", "blue"],
+  color: ["brown", "#70c1ff", "blue"],
   // title: {
   //   text: "曝光入店下单",
   //   left: "center"

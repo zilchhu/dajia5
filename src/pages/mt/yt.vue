@@ -2,7 +2,7 @@
   el-row
     el-col(:span="24")
       el-table(:data = "ytTable")
-        el-table-column(v-for="key in ytCols" :label="key", :prop="key" :key="key" width="200" fixed)
+        el-table-column(prop="" label="")
 </template>
 
 <script>
@@ -12,11 +12,6 @@ export default {
     return {
       ytTable: []
     };
-  },
-  computed: {
-    ytCols() {
-      return this.ytTable.length > 0 ? Object.keys(this.ytTable[0]) : [];
-    }
   },
   mounted() {
     this.fetchYtTable();

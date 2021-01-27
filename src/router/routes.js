@@ -26,6 +26,7 @@ import replyRate from "../pages/mt/replyRate"
 import operating from "../pages/mt/operating"
 import yt from "../pages/mt/yt"
 import Custom from "../pages/ele/Custom"
+import CustomGrid from "../pages/ele/CustomGrid"
 import BusinPassenger from "../pages/mt/BusinPassenger"
 import BusinessInfo from "../pages/ele/BusinessInfo"
 import BusinessInfoorder from "../pages/ele/BusinessInfoorder"
@@ -46,7 +47,7 @@ const routes = [
   {
     path: '', component: app, children: [
       {path: '/resetPwd', component: resetPwd},
-      {path: '/index', component: dashboard},
+      {path: '/index', component: CustomGrid},
       {path: '/sys/menuList', component: menuList},
       {path: '/sys/roleList', component: role},
       {path: '/sys/userList', component: sysUser},
@@ -70,6 +71,7 @@ const routes = [
       {path: '/mt/op', component: op2},
       {path: '/mt/yt', component: yt},
       {path: '/ele/custom', component: Custom},
+      {name: 'customGrid', path: '/ele/customGrid/:ids', component: CustomGrid},
       {path: '/ele/BusinessInfo', component: BusinessInfo},
       {path: '/ele/BusinessInfoorder', component: BusinessInfoorder},
       {path: '/ele/BusinessInfosubsidy', component: BusinessInfosubsidy},
@@ -77,7 +79,6 @@ const routes = [
       {path: '/ele/exposures', component: exposures},
       {path: '/ele/ShopIndicator', component: ShopIndicator},
       {path: '/ele/FlowDistribution', component: FlowDistribution},
-
     ]
   },
   {path: '*', component: NotFoundView}

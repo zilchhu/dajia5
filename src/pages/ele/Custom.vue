@@ -1,7 +1,29 @@
 <template>
-  <div>
+  <div id="grid-container" ref="container">
+    <el-select
+      v-model="selectedChart"
+      @change="selectChart"
+      size="mini"
+      filterable
+      styele="width: 300px;"
+    >
+      <el-option
+        v-for="chart in charts"
+        :key="chart.id"
+        :label="chart.title"
+        :value="chart.id"
+      >
+        <span style="float: left">{{ chart.title }}</span>
+      </el-option>
+    </el-select>
     <el-button @click="run" size="mini">run</el-button>
-    <el-button @click="save" size="mini">save</el-button>
+    <el-button
+      @click="save"
+      :disabled="selectedChart == 1 || selectedChart == 10"
+      size="mini"
+      >save</el-button
+    >
+    <el-button @click="add" size="mini">new</el-button>
     <el-date-picker
       v-model="pickedDates"
       @change="pickDates"
@@ -17,8 +39,10 @@
     >
     </el-date-picker>
     <el-select
+      id="shop-select"
       v-model="selectedShop"
       @change="selectShop"
+      placeholder="请选择门店"
       size="mini"
       filterable
       styele="width: 300px;"
@@ -35,31 +59,54 @@
         }}</span>
       </el-option>
     </el-select>
+    <el-select
+      v-model="selectedRealShop"
+      @change="selectRealShop"
+      placeholder="请选择物理店"
+      size="mini"
+      filterable
+      styele="width: 160px;"
+    >
+      <el-option
+        v-for="realShop in realShops"
+        :key="realShop.real_shop_name"
+        :label="realShop.real_shop_name"
+        :value="realShop.real_shop_name"
+      >
+        <span style="float: left">{{ realShop.real_shop_name }}</span>
+      </el-option>
+    </el-select>
     <div style="display: flex;">
       <div style="flex-basis: 50%; margin-top: 20px;">
         <MonacoEditor
           width="100%"
-          height="200px"
+          height="20px"
           theme="vs"
-          language="sql"
+          language="text"
+          style="margin-bottom: 20px;"
+          v-model="value0"
+        ></MonacoEditor>
+        <MonacoEditor
+          width="100%"
+          height="300px"
+          theme="vs"
+          language="javascript"
           style="margin-bottom: 20px;"
           v-model="value"
         ></MonacoEditor>
         <MonacoEditor
           width="100%"
-          height="600px"
+          height="400px"
           theme="vs"
           language="javascript"
+          :modelOptions="{ tabSize: 2 }"
           v-model="value2"
         ></MonacoEditor>
       </div>
-      <div style="flex-grow: 1; margin-top: 20px; margin-left: 20px;">
-        <div id="canvas" ref="canvas" height="400px"></div>
-        <br />
-        <p v-for="chart in charts" :key="chart.sql">
-          {{ chart.sql }}
-        </p>
-      </div>
+      <VueDragResize  :isActive="true" :w="width" :h="height"  dragHandle=".drag-handle" v-on:resizing="resize" v-on:dragging="resize" :y="88" :x="x">
+        <div id="canvas" ref="canvas"></div>
+        <div class="drag-handle" title="点击以拖拽/缩放"></div>
+      </VueDragResize>
     </div>
   </div>
 </template>
@@ -68,19 +115,19 @@
 import MonacoEditor from "monaco-editor-vue";
 import echarts from "echarts";
 import merge from "deepmerge";
+import VueDragResize from "vue-drag-resize";
 
 export default {
   name: "custom",
   components: {
-    MonacoEditor
+    MonacoEditor,
+    VueDragResize
   },
   data() {
     return {
       chart: null,
       value0: "",
-      value: `\`SELECT * FROM foxx_operating_data 
-  WHERE date BETWEEN \${dates[0]} AND \${dates[1]} 
-    AND shop_id = \${shopId}\``,
+      value: "",
       baseOpt: {
         tooltip: {
           trigger: "axis",
@@ -116,7 +163,7 @@ export default {
         legend: {
           orient: "vertical",
           left: "right",
-          top: "middle", 
+          top: "middle",
           itemGap: 20
         },
         yAxis: {
@@ -127,19 +174,11 @@ export default {
           left: "center"
         }
       },
-      value2: `option = {
-  title: {
-    text: '单店收入'
-  },
-  xAxis: {
-    data: data.map(v => v.date)
-  },
-  series: [
-    { type: 'line', data: data.map(v => v.settlea) }
-  ]
-}`,
+      value2: "",
       shops: [],
       selectedShop: "",
+      realShops: [],
+      selectedRealShop: "",
       pickedDates: "",
       pickerOptions: {
         shortcuts: [
@@ -169,20 +208,51 @@ export default {
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
             }
+          },
+          {
+            text: "最近六个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 180);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近一年",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近三年",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 365 * 3);
+              picker.$emit("pick", [start, end]);
+            }
           }
         ]
-      }
+      },
+      charts: [],
+      selectedChart: 1,
+      newId: -1,
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+      x: 0
     };
-  },
-  computed: {
-    charts() {
-      return localStorage.getItem("charts") || [];
-    }
   },
   methods: {
     run() {
       let shopId = this.selectedShop;
       let dates = this.pickedDates;
+      let realShop = this.selectedRealShop;
 
       let sql = eval(this.value);
 
@@ -196,28 +266,74 @@ export default {
 
       eval(this.value2);
 
+      console.log(option);
       console.log(merge(this.baseOpt, option));
-      localStorage.setItem("value2", this.value2);
+
       this.chart.setOption(merge(this.baseOpt, option), true);
     },
     save() {
-      let originCharts = localStorage.getItem("charts") || [];
-      localStorage.setItem(
-        "charts",
-        JSON.stringify(originCharts.push({ sql: this.value, opt: this.value2 }))
-      );
+      this.saveChart();
     },
     selectShop() {
-      if (this.pickedDates) this.run();
+      this.isVarBinded();
+      this.run();
+    },
+    selectRealShop() {
+      this.isVarBinded();
+      this.run();
+    },
+    selectChart(chartId) {
+      let c = this.charts.find(v => v.id == chartId);
+      if (c) {
+        this.value0 = c.title;
+        this.value = c.sql;
+        this.value2 = c.option;
+      }
+    },
+    add() {
+      this.charts = [
+        ...this.charts,
+        {
+          id: this.newId,
+          title: `无标题${-this.newId}`,
+          sql: "``",
+          option: "option = {}"
+        }
+      ];
+      this.selectedChart = this.newId;
+      this.selectChart(this.newId);
+      this.newId -= 1;
     },
     pickDates() {
-      if (this.selectedShop) this.run();
+      this.isVarBinded();
+      this.run();
+    },
+    isVarBinded() {
+      let matches = this.value.match(/.*(\$\{\}.*)+/);
+      console.log(matches);
+    },
+    resize(newRect) {
+      this.width = newRect.width;
+      this.height = newRect.height;
+      this.top = newRect.top;
+      this.left = newRect.left;
+      this.chart.resize()
     },
     getShops() {
       this.$http
-        .get("http://localhost:9020/shops")
+        .get("http://192.168.3.3:9020/shops")
         .then(res => {
           this.shops = res.data;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    getRealShops() {
+      this.$http
+        .get("http://192.168.3.3:9020/shops/real")
+        .then(res => {
+          this.realShops = res.data;
         })
         .catch(err => {
           console.error(err);
@@ -226,19 +342,81 @@ export default {
     postCustom(sql) {
       console.log(sql);
       this.$http
-        .post("http://localhost:9020/custom", { sql })
+        .post("http://192.168.3.3:9020/custom", { sql })
         .then(res => {
           this.draw(res.data);
         })
         .catch(err => {
           console.error(err);
         });
+    },
+    getCharts() {
+      this.$http
+        .get("http://192.168.3.3:9020/charts")
+        .then(res => {
+          console.log(res.data);
+          this.charts = res.data;
+          this.selectChart(this.selectedChart);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    saveChart() {
+      let chart = { title: this.value0, sql: this.value, option: this.value2 };
+      let id = this.selectedChart;
+      if (id < 0) {
+        this.addChart();
+        return;
+      }
+      this.$http
+        .post("http://192.168.3.3:9020/chart/update", {
+          id,
+          chart
+        })
+        .then(res => {
+          this.$message({
+            message: JSON.stringify(res.data),
+            type: "success"
+          });
+          if (res.data) {
+            this.getCharts();
+          }
+        })
+        .catch(err => {
+          this.$message.error("save failed" + JSON.stringify(err));
+        });
+    },
+    addChart() {
+      let chart = { title: this.value0, sql: this.value, option: this.value2 };
+      this.$http
+        .post("http://192.168.3.3:9020/chart/add", { chart })
+        .then(res => {
+          this.$message({
+            message: JSON.stringify(res.data),
+            type: "success"
+          });
+          if (res.data) {
+            this.getCharts();
+            this.selectedChart = res.data[0];
+            this.selectChart(res.data[0]);
+          }
+        })
+        .catch(err => {
+          this.$message.error("add failed" + JSON.stringify(err));
+        });
     }
   },
   mounted() {
-    this.chart = echarts.init(this.$refs.canvas, "macarons");
-    this.value2 = localStorage.getItem("value2") || this.value2;
+    let o = document.getElementById('canvas')
+    this.chart = echarts.init(o, "macarons");
+    this.x = this.$refs.container.clientWidth / 2 + 40
+    this.width = (this.$refs.container.clientWidth - 60) / 2
+    this.height = this.width / 4 * 3
+
     this.getShops();
+    this.getRealShops();
+    this.getCharts();
   }
 };
 
@@ -329,9 +507,15 @@ export default {
 <style>
 #canvas {
   background: #fff8f2;
-  height: 400px;
+  width: 100%;
+  height: 100%;
+}
+.drag-handle {
+  width: 100%;
+  height: 1.2em;
+  background:#ffab70;
 }
 .el-input--mini .el-input__inner {
-  width: 260px;
+  width: 240px;
 }
 </style>
