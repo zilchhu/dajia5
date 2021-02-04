@@ -76,6 +76,13 @@
         <span style="float: left">{{ realShop.real_shop_name }}</span>
       </el-option>
     </el-select>
+    <el-switch
+      v-model="dark_mode"
+      @change="dark_switch"
+      active-text="夜间"
+      inactive-text="夜间模式"
+    >
+    </el-switch>
     <div style="display: flex;">
       <div style="flex-basis: 50%; margin-top: 20px;">
         <MonacoEditor
@@ -101,9 +108,19 @@
           language="javascript"
           :modelOptions="{ tabSize: 2 }"
           v-model="value2"
+          style="resize: both"
         ></MonacoEditor>
       </div>
-      <VueDragResize  :isActive="true" :w="width" :h="height"  dragHandle=".drag-handle" v-on:resizing="resize" v-on:dragging="resize" :y="88" :x="x">
+      <VueDragResize
+        :isActive="true"
+        :w="width"
+        :h="height"
+        dragHandle=".drag-handle"
+        v-on:resizing="resize"
+        v-on:dragging="resize"
+        :y="88"
+        :x="x"
+      >
         <div id="canvas" ref="canvas"></div>
         <div class="drag-handle" title="点击以拖拽/缩放"></div>
       </VueDragResize>
@@ -113,7 +130,7 @@
 
 <script>
 import MonacoEditor from "monaco-editor-vue";
-import echarts from "echarts";
+import * as echarts from "echarts5";
 import merge from "deepmerge";
 import VueDragResize from "vue-drag-resize";
 
@@ -241,11 +258,12 @@ export default {
       charts: [],
       selectedChart: 1,
       newId: -1,
-      width: 0,
-      height: 0,
+      width: 400,
+      height: 300,
       top: 0,
       left: 0,
-      x: 0
+      x: 0,
+      dark_mode: false
     };
   },
   methods: {
@@ -308,6 +326,12 @@ export default {
       this.isVarBinded();
       this.run();
     },
+    dark_switch(mode) {
+      this.chart.dispose();
+      let o = document.getElementById("canvas");
+      this.chart = echarts.init(o, mode ? "dark" : "macarons");
+      this.run()
+    },
     isVarBinded() {
       let matches = this.value.match(/.*(\$\{\}.*)+/);
       console.log(matches);
@@ -317,7 +341,7 @@ export default {
       this.height = newRect.height;
       this.top = newRect.top;
       this.left = newRect.left;
-      this.chart.resize()
+      this.chart.resize();
     },
     getShops() {
       this.$http
@@ -408,11 +432,11 @@ export default {
     }
   },
   mounted() {
-    let o = document.getElementById('canvas')
+    let o = document.getElementById("canvas");
     this.chart = echarts.init(o, "macarons");
-    this.x = this.$refs.container.clientWidth / 2 + 40
-    this.width = (this.$refs.container.clientWidth - 60) / 2
-    this.height = this.width / 4 * 3
+    this.x = this.$refs.container.clientWidth / 2 + 40;
+    this.width = (this.$refs.container.clientWidth - 60) / 2;
+    this.height = (this.width / 4) * 3;
 
     this.getShops();
     this.getRealShops();
@@ -513,7 +537,7 @@ export default {
 .drag-handle {
   width: 100%;
   height: 1.2em;
-  background:#ffab70;
+  background: #ffab70;
 }
 .el-input--mini .el-input__inner {
   width: 240px;

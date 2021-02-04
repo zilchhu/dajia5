@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import echarts from "echarts";
+import * as echarts from "echarts5";
 import merge from "deepmerge";
 import VueDragResize from "vue-drag-resize";
 
@@ -230,6 +230,7 @@ export default {
       this.postCustoms();
     },
     draw() {
+      console.log('draw')
       this.charts = this.charts.map(v => {
         let option = {},
           data = v.data;
@@ -318,6 +319,7 @@ export default {
               ...v,
               data: res.data[i]
             }));
+            console.log('postCust')
             this.draw();
           }
         })
