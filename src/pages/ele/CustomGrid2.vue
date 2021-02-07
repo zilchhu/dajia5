@@ -71,12 +71,10 @@
       :h="chart.rect ? chart.rect.height : 0"
       :x="chart.rect ? chart.rect.left : 0"
       :y="chart.rect ? chart.rect.top : 0"
-      dragHandle=".drag-handle"
       v-on:resizing="e => resize(e, chart.id)"
       v-on:dragging="e => resize(e, chart.id)"
     >
       <div :id="`chart${chart.id}`" class="canvas"></div>
-      <div class="drag-handle"></div>
     </VueDragResize>
   </div>
 </template>
@@ -116,12 +114,14 @@ export default {
           {
             type: "slider",
             show: true,
+            moveHandleSize: 0,
             xAxisIndex: [0]
           },
           {
             type: "slider",
             show: true,
             yAxisIndex: [0],
+            moveHandleSize: 0,
             left: "93%"
           }
         ],
@@ -215,11 +215,11 @@ export default {
     run() {
       this.charts = this.charts.map((v, i) => {
         let w = (this.$refs.container.clientWidth - 60) / 3;
-        let h = (w / 4) * 3;
+        let h = (w / 16) * 9;
         let row = Math.floor(i / 3),
           col = i % 3;
-        let rect = localStorage.getItem(`rect:${v.id}`)
-          ? JSON.parse(localStorage.getItem(`rect:${v.id}`))
+        let rect = localStorage.getItem(`${this.ids}/rect:${v.id}`)
+          ? JSON.parse(localStorage.getItem(`${this.ids}/rect:${v.id}`))
           : {
               left: (w + 20) * col + 20,
               top: (h + 20) * row + 80,
@@ -258,17 +258,15 @@ export default {
       for (let v of this.charts) {
         if (v.chart) v.chart.dispose();
         let o = document.getElementById(`chart${v.id}`);
-        let chart = echarts.init(o, this.dark_mode ? "dark" : "macarons");
+        let chart = echarts.init(o, this.dark_mode ? "dark" : "light");
         chart.setOption(v.option2);
+        chart.resize()
         v.chart = chart;
         v.debounce_resize = this.debounce(chart.resize);
       }
       console.log(this.charts);
     },
     dark_switch() {
-      for (let v of this.charts) {
-        if (v.chart) v.chart.dispose();
-      }
       this.draw();
     },
     selectShop(value) {
@@ -290,12 +288,18 @@ export default {
       if (target) {
         target[rect] = rect;
         this.charts = newCharts;
-        localStorage.setItem(`rect:${target.id}`, JSON.stringify(rect));
+        localStorage.setItem(
+          `${this.ids}/rect:${target.id}`,
+          JSON.stringify(rect)
+        );
         if (target.debounce_resize) target.debounce_resize();
       }
     },
     reset() {
-      localStorage.clear();
+      localStorage.removeItem("selectedShop");
+      localStorage.removeItem("selectedRealShop");
+      localStorage.removeItem("pickedDates");
+      this.charts.map(v => localStorage.removeItem(`${this.ids}/rect:${v.id}`));
     },
     getShops() {
       this.$http
@@ -322,9 +326,10 @@ export default {
         .get("http://192.168.3.3:9020/charts")
         .then(res => {
           if (res.data) {
-            this.charts = res.data.filter(v =>
-              this.ids.split(",").includes(v.id + "")
-            );
+            this.charts =
+              this.ids == "-1"
+                ? res.data
+                : res.data.filter(v => this.ids.split(",").includes(v.id + ""));
             console.log(this.ids);
             this.run();
           }
@@ -334,18 +339,17 @@ export default {
         });
     },
     postCustoms() {
-      console.log(this.charts.map(v => v.sql2));
+      console.log(this.charts.map(v => ({ id: v.id, sql: v.sql2 })));
       this.$http
-        .post("http://192.168.3.3:9020/customs", {
-          sqls: this.charts.map(v => v.sql2)
+        .post("http://192.168.3.3:9020/customs2", {
+          sqls: this.charts.map(v => ({ id: v.id, sql: v.sql2 }))
         })
         .then(res => {
           if (res.data && !res.data.e) {
-            this.charts = this.charts.map((v, i) => ({
+            this.charts = this.charts.map(v => ({
               ...v,
-              data: res.data[i]
+              data: res.data.find(k => k.id == v.id).data
             }));
-            console.log("postCust");
             this.draw();
           }
         })
@@ -359,19 +363,29 @@ export default {
         clearTimeout(timeout);
         timeout = setTimeout(() => fn.apply(this, arguments), 600);
       };
+    },
+    init() {
+      this.selectedShop = localStorage.getItem("selectedShop") || "";
+      this.selectedRealShop = localStorage.getItem("selectedRealShop") || "";
+      this.pickedDates = localStorage.getItem("pickedDates")
+        ? localStorage.getItem("pickedDates").split(",")
+        : "";
+
+      this.getShops();
+      this.getRealShops();
+      this.getCharts();
     }
   },
-  mounted() {
+  created() {
     // localStorage.clear();
-    this.selectedShop = localStorage.getItem("selectedShop") || "";
-    this.selectedRealShop = localStorage.getItem("selectedRealShop") || "";
-    this.pickedDates = localStorage.getItem("pickedDates")
-      ? localStorage.getItem("pickedDates").split(",")
-      : "";
-
-    this.getShops();
-    this.getRealShops();
-    this.getCharts();
+    this.init();
+  },
+  watch: {
+    $route(route) {
+      if (route.name == "customGrid2") {
+        this.init()
+      }
+    }
   }
 };
 </script>
@@ -386,7 +400,7 @@ export default {
 }
 
 .canvas {
-  background: #fff8f2;
+  background: #fff8f299;
   width: 100%;
   height: 100%;
 }
@@ -395,5 +409,6 @@ export default {
   width: 100%;
   height: 1.2em;
   background: #ffab70;
+  opacity: 0.2;
 }
 </style>

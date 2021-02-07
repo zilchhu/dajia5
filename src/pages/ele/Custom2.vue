@@ -14,9 +14,6 @@
         :value="chart.id"
       >
         <span style="float: left">{{ chart.title }}</span>
-        <span style="float: right; color: #8492a6; font-size: 13px">{{
-          chart.id
-        }}</span>
       </el-option>
     </el-select>
     <el-button @click="run" size="mini">run</el-button>
@@ -91,23 +88,15 @@
         <MonacoEditor
           width="100%"
           height="20px"
-          :theme="editor_theme"
+          theme="vs"
           language="text"
           style="margin-bottom: 20px;"
           v-model="value0"
         ></MonacoEditor>
         <MonacoEditor
           width="100%"
-          height="300px"
-          :theme="editor_theme"
-          language="javascript"
-          style="margin-bottom: 20px;"
-          v-model="value"
-        ></MonacoEditor>
-        <MonacoEditor
-          width="100%"
-          height="400px"
-          :theme="editor_theme"
+          height="800px"
+          theme="vs"
           language="javascript"
           :modelOptions="{ tabSize: 2 }"
           v-model="value2"
@@ -115,15 +104,17 @@
         ></MonacoEditor>
       </div>
       <VueDragResize
-        :isActive="false"
+        :isActive="true"
         :w="width"
         :h="height"
+        dragHandle=".drag-handle"
         v-on:resizing="resize"
         v-on:dragging="resize"
         :y="88"
         :x="x"
       >
         <div id="canvas" ref="canvas"></div>
+        <div class="drag-handle" title="点击以拖拽/缩放"></div>
       </VueDragResize>
     </div>
   </div>
@@ -136,7 +127,7 @@ import merge from "deepmerge";
 import VueDragResize from "vue-drag-resize";
 
 export default {
-  name: "custom",
+  name: "custom2",
   components: {
     MonacoEditor,
     VueDragResize
@@ -145,7 +136,6 @@ export default {
     return {
       chart: null,
       value0: "",
-      value: "",
       baseOpt: {
         tooltip: {
           trigger: "axis",
@@ -169,13 +159,11 @@ export default {
           {
             type: "slider",
             show: true,
-            moveHandleSize: 0,
             xAxisIndex: [0]
           },
           {
             type: "slider",
             show: true,
-            moveHandleSize: 0,
             yAxisIndex: [0],
             left: "93%"
           }
@@ -266,8 +254,7 @@ export default {
       top: 0,
       left: 0,
       x: 0,
-      dark_mode: false,
-      editor_theme: "vs"
+      dark_mode: false
     };
   },
   methods: {
@@ -275,20 +262,10 @@ export default {
       let shopId = this.selectedShop;
       let dates = this.pickedDates;
       let realShop = this.selectedRealShop;
-
-      let sql = eval(this.value);
-
-      this.postCustom(sql);
-    },
-    draw(d) {
-      console.log(d);
-
-      let option = {},
-        data = d;
+      let option = {}
 
       eval(this.value2);
 
-      console.log(option);
       console.log(merge(this.baseOpt, option));
 
       this.chart.setOption(merge(this.baseOpt, option), true);
@@ -297,18 +274,15 @@ export default {
       this.saveChart();
     },
     selectShop() {
-      this.isVarBinded();
       this.run();
     },
     selectRealShop() {
-      this.isVarBinded();
       this.run();
     },
     selectChart(chartId) {
       let c = this.charts.find(v => v.id == chartId);
       if (c) {
         this.value0 = c.title;
-        this.value = c.sql;
         this.value2 = c.option;
       }
     },
@@ -318,7 +292,6 @@ export default {
         {
           id: this.newId,
           title: `无标题${-this.newId}`,
-          sql: "``",
           option: "option = {}"
         }
       ];
@@ -327,19 +300,13 @@ export default {
       this.newId -= 1;
     },
     pickDates() {
-      this.isVarBinded();
       this.run();
     },
     dark_switch(mode) {
-      this.editor_theme = mode ? "vs-dark" : "vs";
       this.chart.dispose();
       let o = document.getElementById("canvas");
-      this.chart = echarts.init(o, mode ? "dark" : "light");
-      this.run();
-    },
-    isVarBinded() {
-      let matches = this.value.match(/.*(\$\{\}.*)+/);
-      console.log(matches);
+      this.chart = echarts.init(o, mode ? "dark" : "macarons");
+      this.run()
     },
     resize(newRect) {
       this.width = newRect.width;
@@ -368,22 +335,10 @@ export default {
           console.error(err);
         });
     },
-    postCustom(sql) {
-      console.log(sql);
-      this.$http
-        .post("http://192.168.3.3:9020/custom", { sql })
-        .then(res => {
-          this.draw(res.data);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
     getCharts() {
       this.$http
         .get("http://192.168.3.3:9020/charts")
         .then(res => {
-          console.log(res.data);
           this.charts = res.data;
           this.selectChart(this.selectedChart);
         })
@@ -392,7 +347,7 @@ export default {
         });
     },
     saveChart() {
-      let chart = { title: this.value0, sql: this.value, option: this.value2 };
+      let chart = { title: this.value0, sql: '--', option: this.value2 };
       let id = this.selectedChart;
       if (id < 0) {
         this.addChart();
@@ -417,7 +372,7 @@ export default {
         });
     },
     addChart() {
-      let chart = { title: this.value0, sql: this.value, option: this.value2 };
+      let chart = { title: this.value0, sql: '--', option: this.value2 };
       this.$http
         .post("http://192.168.3.3:9020/chart/add", { chart })
         .then(res => {
@@ -438,10 +393,10 @@ export default {
   },
   mounted() {
     let o = document.getElementById("canvas");
-    this.chart = echarts.init(o, "light");
+    this.chart = echarts.init(o, "macarons");
     this.x = this.$refs.container.clientWidth / 2 + 40;
     this.width = (this.$refs.container.clientWidth - 60) / 2;
-    this.height = (this.width / 16) * 9;
+    this.height = (this.width / 4) * 3;
 
     this.getShops();
     this.getRealShops();
