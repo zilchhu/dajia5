@@ -169,13 +169,13 @@ export default {
           {
             type: "slider",
             show: true,
-            moveHandleSize: 0,
+            moveHandleSize: 10,
             xAxisIndex: [0]
           },
           {
             type: "slider",
             show: true,
-            moveHandleSize: 0,
+            moveHandleSize: 10,
             yAxisIndex: [0],
             left: "93%"
           },
@@ -292,10 +292,10 @@ export default {
       eval(this.value2);
 
       console.log(option);
-      console.log(merge(this.baseOpt, option));
+      console.log(merge(this.baseOpt, option, { arrayMerge: (_, source) => source }));
 
       this.chart.clear()
-      this.chart.setOption(merge(this.baseOpt, option), true)
+      this.chart.setOption(merge(this.baseOpt, option, { arrayMerge: (_, source) => source }), true)
     },
     save() {
       this.saveChart();

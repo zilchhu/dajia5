@@ -114,14 +114,14 @@ export default {
           {
             type: "slider",
             show: true,
-            moveHandleSize: 0,
+            moveHandleSize: 6,
             xAxisIndex: [0]
           },
           {
             type: "slider",
             show: true,
             yAxisIndex: [0],
-            moveHandleSize: 0,
+            moveHandleSize: 6,
             left: "93%"
           },
           {
@@ -251,7 +251,7 @@ export default {
         let option = {},
           data = v.data;
         eval(v.option);
-        let option2 = merge(this.baseOpt, option);
+        let option2 = merge(this.baseOpt, option, { arrayMerge: (_, source) => source });
         return {
           ...v,
           option2
