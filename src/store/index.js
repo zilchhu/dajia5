@@ -5,7 +5,6 @@ import defaultValue from "../services/default";
 import * as api from "../api";
 import { getCurrentMenu, getSessionKey } from "../common/utils";
 
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -67,10 +66,16 @@ const store = new Vuex.Store({
     //异步的函数
     toggleLoading: ({ commit }) => commit(types.TOGGLE_LOADING),
     loadMenuList: ({ commit }) => {
+      // if (localStorage.getItem("menuList")) {
+      //   commit(types.LOAD_MENU, JSON.parse(localStorage.getItem("menuList")));
+      // } else {
+      //   localStorage.setItem("menuList", JSON.stringify(defaultValue.menuList));
+      //   commit(types.LOAD_MENU, defaultValue.menuList);
+      // }
       Vue.axios
-        .get(api.SYS_MENU_LIST)
+        .get('http://192.168.3.3:9020/menus')
         .then(res => {
-          commit(types.LOAD_MENU, res.data);
+          commit(types.LOAD_MENU, JSON.parse(res.data.menu));
         })
         .catch(exp => commit(types.LOAD_MENU, defaultValue.menuList));
     },

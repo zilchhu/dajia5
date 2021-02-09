@@ -178,6 +178,9 @@ export default {
             moveHandleSize: 0,
             yAxisIndex: [0],
             left: "93%"
+          },
+          {
+            type: "inside"
           }
         ],
         legend: {
@@ -291,17 +294,16 @@ export default {
       console.log(option);
       console.log(merge(this.baseOpt, option));
 
-      this.chart.setOption(merge(this.baseOpt, option), true);
+      this.chart.clear()
+      this.chart.setOption(merge(this.baseOpt, option), true)
     },
     save() {
       this.saveChart();
     },
     selectShop() {
-      this.isVarBinded();
       this.run();
     },
     selectRealShop() {
-      this.isVarBinded();
       this.run();
     },
     selectChart(chartId) {
@@ -336,10 +338,6 @@ export default {
       let o = document.getElementById("canvas");
       this.chart = echarts.init(o, mode ? "dark" : "light");
       this.run();
-    },
-    isVarBinded() {
-      let matches = this.value.match(/.*(\$\{\}.*)+/);
-      console.log(matches);
     },
     resize(newRect) {
       this.width = newRect.width;

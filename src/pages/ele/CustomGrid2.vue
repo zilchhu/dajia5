@@ -123,6 +123,9 @@ export default {
             yAxisIndex: [0],
             moveHandleSize: 0,
             left: "93%"
+          },
+          {
+            type: "inside"
           }
         ],
         legend: {

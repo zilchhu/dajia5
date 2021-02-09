@@ -26,7 +26,6 @@ import replyRate from "../pages/mt/replyRate"
 import operating from "../pages/mt/operating"
 import yt from "../pages/mt/yt"
 import Custom from "../pages/ele/Custom"
-import Custom2 from "../pages/ele/Custom2"
 import CustomGrid from "../pages/ele/CustomGrid"
 import CustomGrid2 from "../pages/ele/CustomGrid2"
 import BusinPassenger from "../pages/mt/BusinPassenger"
@@ -73,7 +72,6 @@ const routes = [
       {path: '/mt/op', component: op2},
       {path: '/mt/yt', component: yt},
       {path: '/ele/custom', component: Custom},
-      {path: '/ele/custom2', component: Custom2},
       {name: 'customGrid', path: '/ele/customGrid/:ids', component: CustomGrid},
       {name: 'customGrid2', path: '/ele/customGrid2/:ids', component: CustomGrid2},
       {path: '/ele/BusinessInfo', component: BusinessInfo},

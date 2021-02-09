@@ -82,7 +82,11 @@
               </el-form-item>
             </el-form>
           </div>
-          <el-dialog title="选择图标" :visible.sync="selectIconDialog" size="tiny">
+          <el-dialog
+            title="选择图标"
+            :visible.sync="selectIconDialog"
+            size="tiny"
+          >
             <div class="select-tree">
               <el-scrollbar
                 tag="div"
@@ -988,7 +992,14 @@ export default {
               desc: this.form.desc,
               children: []
             };
+
             this.appendTreeNode(this.menuTree, ddd);
+            this.$http
+              .post("http://192.168.3.3:9020/menu/update", {
+                menu: JSON.stringify(this.menuTree)
+              })
+              .then(res => console.log("menu sub", res))
+              .catch(err => console.error(err));
             this.menuTree.push({});
             this.menuTree.pop();
           });
@@ -1002,6 +1013,12 @@ export default {
           .catch(e => {
             this.$message("操作成功");
             this.updateTreeNode(this.menuTree, merge({}, this.form));
+            this.$http
+              .post("http://192.168.3.3:9020/menu/update", {
+                menu: JSON.stringify(this.menuTree)
+              })
+              .then(res => console.log("menu sub", res))
+              .catch(err => console.error(err));
           });
       }
     },

@@ -40,6 +40,7 @@ const appendTreeNode = (treeArray, item, idPropName = "id", parentPropName = "pa
       appendTreeNode(value[childrenPropName], item, idPropName, parentPropName, childrenPropName);
     }
   }
+  
 }
 
 const deleteFromTree = (list, id, idPropName = "id", childrenPropName = "children") => {
