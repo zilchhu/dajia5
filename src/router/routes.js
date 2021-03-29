@@ -29,6 +29,7 @@ import Custom from "../pages/ele/Custom"
 import CustomGrid from "../pages/ele/CustomGrid"
 import CustomGrid2 from "../pages/ele/CustomGrid2"
 import BusinPassenger from "../pages/mt/BusinPassenger"
+import shopPassenger from "../pages/mt/shopPassenger"
 import BusinessInfo from "../pages/ele/BusinessInfo"
 import BusinessInfoorder from "../pages/ele/BusinessInfoorder"
 import BusinessInfosubsidy from "../pages/ele/BusinessInfosubsidy"
@@ -36,6 +37,10 @@ import BusinessInfofee from "../pages/ele/BusinessInfofee"
 import exposures from "../pages/ele/exposures"
 import ShopIndicator from "../pages/ele/ShopIndicator"
 import FlowDistribution from "../pages/ele/FlowDistribution"
+import eshopActivi from "../pages/ele/eshopActivi"
+import efoodsSell from "../pages/ele/efoodsSell"
+import eshopPromo from "../pages/ele/eshopPromo"
+import eshopDeliver from "../pages/ele/eshopDeliver"
 
 // Routes
 const routes = [
@@ -69,6 +74,7 @@ const routes = [
       {path: '/mt/replyRate', component: replyRate},
       {path: '/mt/operating', component: operating},
       {path: '/mt/BusinPassenger', component: BusinPassenger},
+      {path: '/mt/shopPassenger', component: shopPassenger},
       {path: '/mt/op', component: op2},
       {path: '/mt/yt', component: yt},
       {path: '/ele/custom', component: Custom},
@@ -81,6 +87,10 @@ const routes = [
       {path: '/ele/exposures', component: exposures},
       {path: '/ele/ShopIndicator', component: ShopIndicator},
       {path: '/ele/FlowDistribution', component: FlowDistribution},
+      {path: '/ele/eshopActivi', component: eshopActivi},
+      {path: '/ele/efoodsSell', component: efoodsSell},
+      {path: '/ele/eshopPromo', component: eshopPromo},
+      {path: '/ele/eshopDeliver', component: eshopDeliver}
     ]
   },
   {path: '*', component: NotFoundView}

@@ -883,7 +883,7 @@ export default {
         label: "name",
         id: "id"
       },
-      maxId: 7000000,
+      maxId: 0,
       menuTree: [],
       form: {
         id: null,
@@ -967,6 +967,13 @@ export default {
     handleNodeClick(data) {
       this.form = merge({}, data);
     },
+    findMaxID(node) {
+      if(node.id > this.maxId) this.maxId = node.id 
+      if(node.children == null || node.children.length == 0) return
+      for(let child of node.children) {
+        this.findMaxID(child)
+      }
+    },
     onSubmit() {
       if (this.form.id == null) {
         this.$http
@@ -977,9 +984,10 @@ export default {
             this.appendTreeNode(this.menuTree, res.data);
           })
           .catch(e => {
-            this.maxId += 1;
+            this.findMaxID({id: 0, children: this.menuTree})
+            console.log(this.maxId)
             this.$message("操作成功");
-            this.form.id = this.maxId;
+            this.form.id = this.maxId + 1;
             var ddd = {
               id: this.form.id,
               name: this.form.name,

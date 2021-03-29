@@ -83,6 +83,7 @@
 import * as echarts from "echarts5";
 import merge from "deepmerge";
 import VueDragResize from "vue-drag-resize";
+import { menuList } from "../../services/sys";
 
 export default {
   name: "custom-grid",
@@ -110,29 +111,18 @@ export default {
           }
         },
         calculable: true,
-        dataZoom: [
-          {
-            type: "slider",
-            show: true,
-            moveHandleSize: 6,
-            xAxisIndex: [0]
-          },
-          {
-            type: "slider",
-            show: true,
-            yAxisIndex: [0],
-            moveHandleSize: 6,
-            left: "93%"
-          },
-          {
-            type: "inside"
-          }
-        ],
+        dataZoom: {
+          type: 'inside',
+          xAxisIndex: [0]
+        },
         legend: {
           orient: "vertical",
           left: "right",
           top: "middle",
           itemGap: 20
+        },
+        grid: {
+          bottom: 30
         },
         yAxis: {
           type: "value"
@@ -146,7 +136,7 @@ export default {
       selectedShop: "",
       realShops: [],
       selectedRealShop: "",
-      pickedDates: "",
+      pickedDates: "20210301至20210303",
       pickerOptions: {
         shortcuts: [
           {
@@ -206,7 +196,10 @@ export default {
         ]
       },
       charts: [],
-      dark_mode: false
+      dark_mode: false,
+      platform: "",
+      layouts: [],
+      debounce_layout: null
     };
   },
   computed: {
@@ -221,8 +214,11 @@ export default {
         let h = (w / 16) * 9;
         let row = Math.floor(i / 3),
           col = i % 3;
-        let rect = localStorage.getItem(`${this.ids}/rect:${v.id}`)
-          ? JSON.parse(localStorage.getItem(`${this.ids}/rect:${v.id}`))
+        // let rect = localStorage.getItem(`${this.ids}/rect:${v.id}`)
+        let rect = this.layouts.find(l => l.ids == this.ids && l.id == v.id)
+          ? JSON.parse(
+              this.layouts.find(l => l.ids == this.ids && l.id == v.id).rect
+            )
           : {
               left: (w + 20) * col + 20,
               top: (h + 20) * row + 80,
@@ -251,7 +247,9 @@ export default {
         let option = {},
           data = v.data;
         eval(v.option);
-        let option2 = merge(this.baseOpt, option, { arrayMerge: (_, source) => source });
+        let option2 = merge(this.baseOpt, option, {
+          arrayMerge: (_, source) => source
+        });
         return {
           ...v,
           option2
@@ -263,7 +261,7 @@ export default {
         let o = document.getElementById(`chart${v.id}`);
         let chart = echarts.init(o, this.dark_mode ? "dark" : "light");
         chart.setOption(v.option2);
-        chart.resize()
+        chart.resize();
         v.chart = chart;
         v.debounce_resize = this.debounce(chart.resize);
       }
@@ -274,6 +272,10 @@ export default {
     },
     selectShop(value) {
       localStorage.setItem("selectedShop", value);
+      let shop = this.shops.find(v => v.shopId == value);
+      shop.platform == "美团"
+        ? window.sessionStorage.setItem("shop_info", value)
+        : window.sessionStorage.setItem("ele_shop_info", value);
       this.run();
     },
     selectRealShop(value) {
@@ -282,7 +284,7 @@ export default {
     },
     pickDates(value) {
       console.log(value);
-      localStorage.setItem("pickedDates", value);
+      window.sessionStorage.setItem("changedate", value.join(","));
       this.run();
     },
     resize(rect, id) {
@@ -291,10 +293,15 @@ export default {
       if (target) {
         target[rect] = rect;
         this.charts = newCharts;
-        localStorage.setItem(
-          `${this.ids}/rect:${target.id}`,
-          JSON.stringify(rect)
-        );
+        // localStorage.setItem(
+        //   `${this.ids}/rect:${target.id}`,
+        //   JSON.stringify(rect)
+        // );
+        this.debounce_layout({
+          ids: this.ids,
+          id: target.id,
+          rect: JSON.stringify(rect)
+        });
         if (target.debounce_resize) target.debounce_resize();
       }
     },
@@ -309,6 +316,8 @@ export default {
         .get("http://192.168.3.3:9020/shops")
         .then(res => {
           this.shops = res.data;
+          if (/美团|饿了么/.test(this.platform))
+            this.shops = this.shops.filter(v => v.platform == this.platform);
         })
         .catch(err => {
           console.error(err);
@@ -319,6 +328,26 @@ export default {
         .get("http://192.168.3.3:9020/shops/real")
         .then(res => {
           this.realShops = res.data;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    getLayouts() {
+      this.$http
+        .get("http://192.168.3.3:9020/charts/layouts")
+        .then(res => {
+          this.layouts = res.data;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    saveLayout(ly) {
+      this.$http
+        .post("http://192.168.3.3:9020/charts/layout/update", ly)
+        .then(res => {
+          console.log(res);
         })
         .catch(err => {
           console.error(err);
@@ -368,14 +397,32 @@ export default {
       };
     },
     init() {
-      this.selectedShop = localStorage.getItem("selectedShop") || "";
+      // this.selectedShop = localStorage.getItem("selectedShop") || "";
+      console.log(this.$route);
+      this.debounce_layout = this.debounce(this.saveLayout);
+      menuList().then(res => {
+        for (let p of res) {
+          for (let l of p.children) {
+            if (l.href == this.$route.path) this.platform = p.name;
+          }
+        }
+      });
+
+      if (/美团|饿了么/.test(this.platform))
+        this.shops = this.shops.filter(v => v.platform == this.platform);
+      this.selectedShop =
+        (this.platform == "饿了么"
+          ? window.sessionStorage.getItem("ele_shop_info")
+          : window.sessionStorage.getItem("shop_info")) || "";
+
       this.selectedRealShop = localStorage.getItem("selectedRealShop") || "";
-      this.pickedDates = localStorage.getItem("pickedDates")
-        ? localStorage.getItem("pickedDates").split(",")
+      this.pickedDates = window.sessionStorage.getItem("changedate")
+        ? window.sessionStorage.getItem("changedate").split(",")
         : "";
 
       this.getShops();
       this.getRealShops();
+      this.getLayouts();
       this.getCharts();
     }
   },
@@ -386,8 +433,16 @@ export default {
   watch: {
     $route(route) {
       if (route.name == "customGrid2") {
-        this.init()
+        this.init();
       }
+    },
+    platform(n) {
+      if (/美团|饿了么/.test(n))
+        this.shops = this.shops.filter(v => v.platform == n);
+      this.selectedShop =
+        (n == "饿了么"
+          ? window.sessionStorage.getItem("ele_shop_info")
+          : window.sessionStorage.getItem("shop_info")) || "";
     }
   }
 };
@@ -403,7 +458,7 @@ export default {
 }
 
 .canvas {
-  background: #fff8f299;
+  background: #ffffff10;
   width: 100%;
   height: 100%;
 }

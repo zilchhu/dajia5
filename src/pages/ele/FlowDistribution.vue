@@ -1110,6 +1110,7 @@ export default {
       let statrDate = dateFormat("YYYYmmdd", dt);
       console.log([statrDate, endDate]);
       this.date = [statrDate, endDate];
+      console.log(this.date)
       window.sessionStorage.setItem("changedate", this.date);
     }
 

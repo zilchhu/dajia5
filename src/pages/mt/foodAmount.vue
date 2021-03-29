@@ -145,6 +145,7 @@ export default {
                 }
               })
               this.tableData = ListMap
+              console.log(this.tableData)
             } else {
               this.$message('数据为空')
             }
