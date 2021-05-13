@@ -172,7 +172,7 @@ export default {
         return;
       }
       this.$http
-        .post("http://192.168.3.3:9020/custom", {
+        .post("http://192.168.3.112:9020/custom", {
           sql: `SELECT shop_id, title , rule ,  DATE_FORMAT(insert_date, '%Y%m%d') insertDate
                       FROM ele_activity_full_reduction  
                       WHERE descs = '进行中'  AND conflict_message IS NULL 

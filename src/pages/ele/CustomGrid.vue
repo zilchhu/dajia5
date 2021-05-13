@@ -299,7 +299,7 @@ export default {
     },
     getShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops")
+        .get("http://192.168.3.112:9020/shops")
         .then(res => {
           this.shops = res.data;
         })
@@ -309,7 +309,7 @@ export default {
     },
     getRealShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops/real")
+        .get("http://192.168.3.112:9020/shops/real")
         .then(res => {
           this.realShops = res.data;
         })
@@ -319,7 +319,7 @@ export default {
     },
     getCharts() {
       this.$http
-        .get("http://192.168.3.3:9020/charts")
+        .get("http://192.168.3.112:9020/charts")
         .then(res => {
           if (res.data) {
             this.charts = res.data.filter(v =>
@@ -336,7 +336,7 @@ export default {
     postCustoms() {
       console.log(this.charts.map(v => v.sql2));
       this.$http
-        .post("http://192.168.3.3:9020/customs", {
+        .post("http://192.168.3.112:9020/customs", {
           sqls: this.charts.map(v => v.sql2)
         })
         .then(res => {

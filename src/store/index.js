@@ -73,7 +73,7 @@ const store = new Vuex.Store({
       //   commit(types.LOAD_MENU, defaultValue.menuList);
       // }
       Vue.axios
-        .get('http://192.168.3.3:9020/menus')
+        .get('http://192.168.3.112:9020/menus')
         .then(res => {
           commit(types.LOAD_MENU, JSON.parse(res.data.menu));
         })

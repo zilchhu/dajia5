@@ -148,7 +148,7 @@ export default {
         return;
       }
       this.$http
-        .post("http://192.168.3.3:9020/custom", {
+        .post("http://192.168.3.112:9020/custom", {
           sql: `SELECT
                     shop_id,
                     jtotalCost + fcost + pcostNum 总消费,

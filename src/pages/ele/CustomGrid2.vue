@@ -313,7 +313,7 @@ export default {
     },
     getShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops")
+        .get("http://192.168.3.112:9020/shops")
         .then(res => {
           this.shops = res.data;
           if (/美团|饿了么/.test(this.platform))
@@ -325,7 +325,7 @@ export default {
     },
     getRealShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops/real")
+        .get("http://192.168.3.112:9020/shops/real")
         .then(res => {
           this.realShops = res.data;
         })
@@ -335,7 +335,7 @@ export default {
     },
     getLayouts() {
       this.$http
-        .get("http://192.168.3.3:9020/charts/layouts")
+        .get("http://192.168.3.112:9020/charts/layouts")
         .then(res => {
           this.layouts = res.data;
         })
@@ -345,7 +345,7 @@ export default {
     },
     saveLayout(ly) {
       this.$http
-        .post("http://192.168.3.3:9020/charts/layout/update", ly)
+        .post("http://192.168.3.112:9020/charts/layout/update", ly)
         .then(res => {
           console.log(res);
         })
@@ -355,7 +355,7 @@ export default {
     },
     getCharts() {
       this.$http
-        .get("http://192.168.3.3:9020/charts")
+        .get("http://192.168.3.112:9020/charts")
         .then(res => {
           if (res.data) {
             this.charts =
@@ -373,7 +373,7 @@ export default {
     postCustoms() {
       console.log(this.charts.map(v => ({ id: v.id, sql: v.sql2 })));
       this.$http
-        .post("http://192.168.3.3:9020/customs2", {
+        .post("http://192.168.3.112:9020/customs2", {
           sqls: this.charts.map(v => ({ id: v.id, sql: v.sql2 }))
         })
         .then(res => {

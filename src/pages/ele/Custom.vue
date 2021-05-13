@@ -347,7 +347,7 @@ export default {
     },
     getShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops")
+        .get("http://192.168.3.112:9020/shops")
         .then(res => {
           this.shops = res.data;
         })
@@ -357,7 +357,7 @@ export default {
     },
     getRealShops() {
       this.$http
-        .get("http://192.168.3.3:9020/shops/real")
+        .get("http://192.168.3.112:9020/shops/real")
         .then(res => {
           this.realShops = res.data;
         })
@@ -368,7 +368,7 @@ export default {
     postCustom(sql) {
       console.log(sql);
       this.$http
-        .post("http://192.168.3.3:9020/custom", { sql })
+        .post("http://192.168.3.112:9020/custom", { sql })
         .then(res => {
           this.draw(res.data);
         })
@@ -378,7 +378,7 @@ export default {
     },
     getCharts() {
       this.$http
-        .get("http://192.168.3.3:9020/charts")
+        .get("http://192.168.3.112:9020/charts")
         .then(res => {
           console.log(res.data);
           this.charts = res.data;
@@ -396,7 +396,7 @@ export default {
         return;
       }
       this.$http
-        .post("http://192.168.3.3:9020/chart/update", {
+        .post("http://192.168.3.112:9020/chart/update", {
           id,
           chart
         })
@@ -416,7 +416,7 @@ export default {
     addChart() {
       let chart = { title: this.value0, sql: this.value, option: this.value2 };
       this.$http
-        .post("http://192.168.3.3:9020/chart/add", { chart })
+        .post("http://192.168.3.112:9020/chart/add", { chart })
         .then(res => {
           this.$message({
             message: JSON.stringify(res.data),

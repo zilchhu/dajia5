@@ -149,7 +149,7 @@ export default {
         .reverse();
       this.colunmName = days;
       this.$http
-        .post("http://192.168.3.3:9020/custom", {
+        .post("http://192.168.3.112:9020/custom", {
           sql: `SELECT 
                     shop_id,
                     item_name ,

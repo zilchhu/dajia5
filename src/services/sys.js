@@ -40,7 +40,7 @@ export function msgList(params) {
 export function menuList(params) {
   return new Promise((resolve, reject) => {
     axios
-      .get("http://192.168.3.3:9020/menus")
+      .get("http://192.168.3.112:9020/menus")
       .then(
         res => {
           resolve(JSON.parse(res.data.menu));
