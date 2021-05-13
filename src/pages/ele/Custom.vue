@@ -329,7 +329,6 @@ export default {
       this.newId -= 1;
     },
     pickDates() {
-      this.isVarBinded();
       this.run();
     },
     dark_switch(mode) {
